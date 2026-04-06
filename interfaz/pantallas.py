@@ -4,8 +4,8 @@ from abc import abstractmethod
 from constantes import estilos, config
 
 class Pantalla(tk.Frame):
-    def __init__(self, parent, controlador, nombre):
-        super().__init__(parent)
+    def __init__(self, contenedor, controlador, nombre):
+        super().__init__(contenedor)
         self.configure(background=estilos.Color.FONDO)
         self.controlador = controlador
         self.opcion_seleccionada = tk.StringVar(self, value="a")
@@ -16,8 +16,8 @@ class Pantalla(tk.Frame):
         pass
 
 class Inicio(Pantalla):
-    def __init__(self, parent, controlador):
-        super().__init__(parent, controlador, "Inicio")
+    def __init__(self, contenedor, controlador):
+        super().__init__(contenedor, controlador, "Inicio")
         self.carga_widgets()
     def carga_widgets(self):
         tk.Label(
@@ -95,8 +95,8 @@ class Inicio(Pantalla):
         )
 
 class Campana(Pantalla):
-    def __init__(self, parent, controlador):
-        super().__init__(parent, controlador, "Campaña")
+    def __init__(self, contenedor, controlador):
+        super().__init__(contenedor, controlador, "Campaña")
         self.carga_widgets()
 
     def carga_widgets(self):
@@ -172,8 +172,8 @@ class Campana(Pantalla):
     #     print(self.nombre.set(f"Hola {self.nombre_master.get()}"))
 
 class Personajes(Pantalla):
-    def __init__(self, parent, controlador):
-        super().__init__(parent, controlador, "Personajes")
+    def __init__(self, contenedor, controlador):
+        super().__init__(contenedor, controlador, "Personajes")
         self.carga_widgets()
     def carga_widgets(self):
         tk.Label(

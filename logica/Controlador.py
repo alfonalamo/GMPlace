@@ -1,8 +1,8 @@
 import tkinter as tk
 
 from constantes import estilos
-from pantallas import Inicio, Campana, Personajes
-from navegador import Navegador
+from interfaz.pantallas import Inicio, Campana, Personajes
+from interfaz.navegador import Navegador
 
 
 class Controlador(tk.Tk):
@@ -23,26 +23,26 @@ class Controlador(tk.Tk):
             pady= 11
         )
 
-        contenedor = tk.Frame(self)
+        contenedor_principal = tk.Frame(self)
         self.modo = ""
-        contenedor.pack(
+        contenedor_principal.pack(
             side = tk.TOP,
             fill = tk.BOTH,
             expand= False,
             padx= 22,
             pady= 11
         )
-        contenedor.configure(background=estilos.Color.FONDO)
-        contenedor.configure(background="red")
-        contenedor.grid_columnconfigure(0, weight=1)
-        contenedor.grid_rowconfigure(0, weight=1)
+        contenedor_principal.configure(background=estilos.Color.FONDO)
+        contenedor_principal.configure(background="red")
+        contenedor_principal.grid_columnconfigure(0, weight=1)
+        contenedor_principal.grid_rowconfigure(0, weight=1)
 
         # Creamos un diccionario de frames y lo llenamos con los distintos frames de pantallas.py,
         # desde ese diccionario lo cargamos al contenedor principal
         self.frames ={}
 
         for F in (Inicio, Campana, Personajes):
-            frame = F(contenedor, self)
+            frame = F(contenedor_principal, self)
             self.frames[str(frame.nombre)] = frame
             frame.grid(row=0, column=0, sticky=tk.NSEW)
         print("Frames = ", self.frames)
