@@ -15,16 +15,25 @@ class Controlador(tk.Tk):
         self.config(background=estilos.Color.FONDO)
 
         navegador = Navegador(self, self)
-        navegador.pack()
+        navegador.pack(
+            side= tk.TOP,
+            fill= tk.BOTH,
+            expand= False,
+            padx= 22,
+            pady= 11
+        )
 
         contenedor = tk.Frame(self)
         self.modo = ""
         contenedor.pack(
             side = tk.TOP,
             fill = tk.BOTH,
-            expand = True
+            expand= False,
+            padx= 22,
+            pady= 11
         )
         contenedor.configure(background=estilos.Color.FONDO)
+        contenedor.configure(background="red")
         contenedor.grid_columnconfigure(0, weight=1)
         contenedor.grid_rowconfigure(0, weight=1)
 
