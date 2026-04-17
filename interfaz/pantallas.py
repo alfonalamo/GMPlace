@@ -23,7 +23,7 @@ class Inicio(Pantalla):
         tk.Label(
             self,
             text= "Hola aventurero, aqui empieza",
-            justify= tk.CENTER,
+            justify= tk.LEFT,
             **estilos.ESTILO_DEFAULT
             ).pack(
             side= tk.TOP,
@@ -65,6 +65,8 @@ class Inicio(Pantalla):
                 text= key,
                 variable= self.opcion_seleccionada,
                 value= value,
+                selectcolor= estilos.Color.TEXTO_BLANCO,
+                highlightcolor="red",
                 activebackground= estilos.Color.FONDO,
                 activeforeground= estilos.Color.TEXTO_BLANCO,
                 **estilos.ESTILO_DEFAULT
@@ -94,9 +96,9 @@ class Inicio(Pantalla):
             pady=5
         )
 
-class Campana(Pantalla):
+class Combate(Pantalla):
     def __init__(self, contenedor, controlador):
-        super().__init__(contenedor, controlador, "Campaña")
+        super().__init__(contenedor, controlador, "Combate")
         self.carga_widgets()
 
     def carga_widgets(self):
@@ -171,9 +173,9 @@ class Campana(Pantalla):
     # def update_nombre(self):
     #     print(self.nombre.set(f"Hola {self.nombre_master.get()}"))
 
-class Personajes(Pantalla):
+class Elementos(Pantalla):
     def __init__(self, contenedor, controlador):
-        super().__init__(contenedor, controlador, "Personajes")
+        super().__init__(contenedor, controlador, "Elementos")
         self.carga_widgets()
     def carga_widgets(self):
         tk.Label(

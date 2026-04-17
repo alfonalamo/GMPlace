@@ -5,7 +5,7 @@ from constantes import estilos
 class Navegador(tk.Frame):
     def __init__(self, parent, controlador):
         super().__init__(parent)
-        self.configure(background=estilos.Color.FONDO)
+        self.configure(background=estilos.Color.FONDO_NAV, width=300)
         self.controlador = controlador
         # self.opcion_seleccionada = tk.StringVar(self, value="a")
         self.carga_widgets()
@@ -19,12 +19,12 @@ class Navegador(tk.Frame):
                        )
 
         BotonNavegador(self,
-                        "Campaña",
+                        "Combate",
                        self.controlador
                        )
 
         BotonNavegador(self,
-                        "Personajes",
+                        "Elementos",
                        self.controlador
                        )
 
@@ -39,10 +39,11 @@ class BotonNavegador(tk.Button):
             # activebackground=estilos.Color.FONDO,
             activebackground=estilos.Color.FONDO,
             activeforeground=estilos.Color.TEXTO,
+            justify=tk.LEFT
         )
         self.pack(
             side= tk.LEFT,
             fill=tk.BOTH,
             expand=True,
             padx=5,
-            pady=5)
+            pady=20)

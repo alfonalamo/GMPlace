@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from constantes import estilos
-from interfaz.pantallas import Inicio, Campana, Personajes
+from interfaz.pantallas import Inicio, Combate, Elementos
 from interfaz.navegador import Navegador
 
 
@@ -17,10 +17,10 @@ class Controlador(tk.Tk):
         navegador = Navegador(self, self)
         navegador.pack(
             side= tk.TOP,
-            fill= tk.BOTH,
+            fill= tk.X,
             expand= False,
-            padx= 22,
-            pady= 11
+            padx= 0,
+            pady= 0
         )
 
         contenedor_principal = tk.Frame(self)
@@ -33,7 +33,6 @@ class Controlador(tk.Tk):
             pady= 11
         )
         contenedor_principal.configure(background=estilos.Color.FONDO)
-        contenedor_principal.configure(background="red")
         contenedor_principal.grid_columnconfigure(0, weight=1)
         contenedor_principal.grid_rowconfigure(0, weight=1)
 
@@ -41,13 +40,12 @@ class Controlador(tk.Tk):
         # desde ese diccionario lo cargamos al contenedor principal
         self.frames ={}
 
-        for F in (Inicio, Campana, Personajes):
+        for F in (Inicio, Combate, Elementos):
             frame = F(contenedor_principal, self)
             self.frames[str(frame.nombre)] = frame
             frame.grid(row=0, column=0, sticky=tk.NSEW)
         print("Frames = ", self.frames)
         self.muestra_frame("Inicio")
-        # self.muestra_frame(Inicio)
 
     def muestra_frame(self, frame):
         frame = self.frames[frame]
