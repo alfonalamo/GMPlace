@@ -10,6 +10,7 @@ class Pantalla(tk.Frame):
         self.controlador = controlador
         self.opcion_seleccionada = tk.StringVar(self, value="a")
         self.nombre = nombre
+        self.grid(row=0, column=0, sticky=tk.NSEW)
 
     @abstractmethod
     def carga_widgets(self):
@@ -82,7 +83,7 @@ class Inicio(Pantalla):
             self,
             text= "CAMPAÑA",
             # command= self.ir_campagna,
-            command= lambda: self.controlador.muestra_frame("Campaña"),
+            command= lambda: self.controlador.muestra_pantalla("Campaña"),
             **estilos.ESTILO_DEFAULT,
             relief= tk.FLAT,
             # activebackground=estilos.Color.FONDO,
@@ -156,7 +157,7 @@ class Combate(Pantalla):
             self,
             text= "Inicio",
             # command= self.ir_campagna,
-            command= lambda: self.controlador.muestra_frame(Inicio),
+            command= lambda: self.controlador.muestra_pantalla(Inicio),
             **estilos.ESTILO_DEFAULT,
             relief= tk.GROOVE,
             activebackground=estilos.Color.FONDO,
