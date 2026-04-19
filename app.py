@@ -1,5 +1,6 @@
 import tkinter as tk
-
+from tkinter import simpledialog, filedialog
+import os
 app = tk.Tk()
 
 nombre = tk.StringVar(app)
@@ -46,5 +47,7 @@ tk.Entry(
     fill=tk.BOTH,
     expand=True
 )
+
+
 
 app.mainloop()

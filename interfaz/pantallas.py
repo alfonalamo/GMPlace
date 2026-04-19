@@ -1,25 +1,16 @@
 import tkinter as tk
 from abc import abstractmethod
+from tkinter import ttk
 
 from constantes import estilos, config
-
-class Pantalla(tk.Frame):
-    def __init__(self, contenedor, controlador, nombre):
-        super().__init__(contenedor)
-        self.configure(background=estilos.Color.FONDO)
-        self.controlador = controlador
-        self.opcion_seleccionada = tk.StringVar(self, value="a")
-        self.nombre = nombre
-        self.grid(row=0, column=0, sticky=tk.NSEW)
-
-    @abstractmethod
-    def carga_widgets(self):
-        pass
+from interfaz.pantalla import Pantalla
+from interfaz.navegador import NavegadorLateral
 
 class Inicio(Pantalla):
     def __init__(self, contenedor, controlador):
         super().__init__(contenedor, controlador, "Inicio")
         self.carga_widgets()
+
     def carga_widgets(self):
         tk.Label(
             self,
@@ -177,17 +168,62 @@ class Combate(Pantalla):
 class Elementos(Pantalla):
     def __init__(self, contenedor, controlador):
         super().__init__(contenedor, controlador, "Elementos")
+        categorias =  ("Objetos", "Personajes", "Enemigos")
+        self.pantallas = {}
+        self.contenedor_principal = tk.Frame(self, background="green")
+
+        for categoria in categorias:
+            pantalla = Subpantalla(self.contenedor_principal, self.controlador, categoria)
+            self.pantallas[str(pantalla.nombre)] = pantalla
+
+        print("pantallas ", self.pantallas)
+        self.pantalla_activa = "Personajes" # La pantalla que se verá por defecto al inicio
+        controlador.muestra_pantalla(self, self.pantalla_activa)
+
+        self.barra_navegacion = NavegadorLateral(self, self.controlador, self.pantallas.values())
         self.carga_widgets()
+
+
     def carga_widgets(self):
-        tk.Label(
-            self,
-            text= "Hola aventurero",
-            justify= tk.CENTER,
-            **estilos.ESTILO_DEFAULT
-            ).pack(
-            side= tk.TOP,
-            fill= tk.BOTH,
-            expand= True,
-            padx= 22,
-            pady= 11
+        self.barra_navegacion.pack(
+            side= tk.LEFT,
+            fill= tk.Y,
+            expand= False,
+            padx= 0,
+            pady= 0
         )
+        self.contenedor_principal.pack(
+            side = tk.LEFT,
+            fill = tk.BOTH,
+            expand= True,
+            padx= 0,
+            pady= 0
+        )
+
+class Subpantalla(Pantalla):
+    def __init__(self, contenedor, controlador, nombre):
+        super().__init__(contenedor, controlador, nombre)
+        self.carga_widgets()
+
+    def carga_widgets(self):
+        print("self",self)
+        nuevo_elemento = tk.Button(
+            self,
+            text=f"Añadir elemento a {self.nombre}",
+            command=lambda: tk.Toplevel(),
+            background="blue"
+            )
+
+        # nuevo_elemento.pack(
+        #     side=tk.LEFT,
+        #     fill=tk.BOTH,
+        #     expand=True,
+        #     padx=5,
+        #     pady=20)
+        # tk.Text(self).pack(
+        #     side=tk.LEFT,
+        #     fill=tk.BOTH,
+        #     expand=True,
+        #     padx=5,
+        #     pady=20)
+        tk.Label(self, text=self.nombre).pack(side=tk.BOTTOM)

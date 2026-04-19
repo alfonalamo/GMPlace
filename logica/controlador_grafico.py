@@ -1,25 +1,19 @@
 from interfaz.ventana import Ventana
-from interfaz.pantallas import Inicio, Combate, Elementos
 
 class Controlador:
     def __init__(self, *args, **kwargs):
-        self.ventana_principal = Ventana(self)
+        self.ventana = Ventana(self) # Defino la ventana principal
+        print("Frames = ", self.ventana.pantallas)
+        self.ventana.mainloop()
 
-        # Creo una tupla de las clases que heredan de Pantalla, asi solo es necesario añadirlo aquí
-        # para añadir una pantalla nueva
-        pantallas = (Inicio, Combate, Elementos)
-
-        # Recorro la tupla de pantallas y creo un objeto de cada una, directamente al contenedor principal de la ventana
-        for Pantalla in pantallas:
-            pantalla = Pantalla(self.ventana_principal.contenedor_principal, self)
-            self.ventana_principal.pantallas[str(pantalla.nombre)] = pantalla
-        print("Frames = ", self.ventana_principal.pantallas)
-        self.muestra_pantalla("Inicio")
-        self.ventana_principal.mainloop()
-
-    def muestra_pantalla(self, pantalla):
-        pantalla = self.ventana_principal.pantallas[pantalla]
+    def muestra_pantalla(self, ventana, pantalla):
+        print(pantalla)
+        pantalla = ventana.pantallas[pantalla]
         pantalla.tkraise()
+
+    def activa_boton(self):
+        # self.ventana_principal.
+        pass
 
     def cambia_pantalla(self, nombre_pantalla):
         pass

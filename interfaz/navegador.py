@@ -1,49 +1,57 @@
 import tkinter as tk
+from abc import abstractmethod, ABC
 from constantes import estilos
+from interfaz.items import BotonNavegador
 
 
 class Navegador(tk.Frame):
-    def __init__(self, parent, controlador):
-        super().__init__(parent)
-        self.configure(background=estilos.Color.FONDO_NAV, width=300)
+    def __init__(self, contenedor, controlador, pantallas):
+        super().__init__(contenedor)
+        self.contenedor = contenedor
         self.controlador = controlador
-        # self.opcion_seleccionada = tk.StringVar(self, value="a")
-        self.carga_widgets()
+        self.pantallas = pantallas # Una lista de objetos pantalla que hay que cargar
+        self.botones = {}
+        self.carga_botones()
+        self.boton_activo = self.botones[contenedor.pantalla_activa]
+        self.boton_activo.desactivar()
+        self.muestra_botones()
 
-        print("navegador", self.controlador)
+        self.configure(background=estilos.Color.FONDO_NAV, width=300)
 
-    def carga_widgets(self):
-        BotonNavegador(self,
-                        "Inicio",
-                       self.controlador
-                       )
+    def carga_botones(self):
+        for pantalla in self.pantallas:
+            self.botones[pantalla.nombre] = BotonNavegador(
+                self,
+                pantalla.nombre,
+                self.controlador
+            )
+    @abstractmethod
+    def muestra_botones(self):
+        pass
 
-        BotonNavegador(self,
-                        "Combate",
-                       self.controlador
-                       )
+class NavegadorSuperior(Navegador):
+    def __init__(self, contenedor, controlador, pantallas):
+        super().__init__(contenedor, controlador, pantallas)
 
-        BotonNavegador(self,
-                        "Elementos",
-                       self.controlador
-                       )
-
-class BotonNavegador(tk.Button):
-    def __init__(self, parent, texto, controlador):
-        super().__init__(
-            parent,
-            text=texto,
-            command=lambda: controlador.muestra_frame(texto),
-            **estilos.ESTILO_DEFAULT,
-            relief=tk.FLAT,
-            # activebackground=estilos.Color.FONDO,
-            activebackground=estilos.Color.FONDO,
-            activeforeground=estilos.Color.TEXTO,
-            justify=tk.LEFT
-        )
-        self.pack(
-            side= tk.LEFT,
+    def muestra_botones(self):
+        for boton in self.botones.values():
+            boton.pack(
+            side=tk.LEFT,
             fill=tk.BOTH,
             expand=True,
             padx=5,
             pady=20)
+
+class NavegadorLateral(Navegador):
+    def __init__(self, contenedor, controlador, pantallas):
+        super().__init__(contenedor, controlador, pantallas)
+
+    def muestra_botones(self):
+        for boton in self.botones.values():
+            boton.pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=False,
+            padx=5,
+            pady=5
+            )
