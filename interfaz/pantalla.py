@@ -8,7 +8,6 @@ class Pantalla(tk.Frame):
     def __init__(self, contenedor, controlador, nombre):
         super().__init__(contenedor)
         self.configure(background=estilos.Color.FONDO)
-        self.configure(background="yellow")
         self.controlador = controlador
         self.nombre = nombre
         self.opcion_seleccionada = tk.StringVar(self, value="a")

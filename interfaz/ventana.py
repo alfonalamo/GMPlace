@@ -16,7 +16,7 @@ class Ventana(tk.Tk):
             pantalla = Pantalla(self.contenedor_principal, self.controlador)
             self.pantallas[str(pantalla.nombre)] = pantalla
 
-        self.pantalla_activa = "Elementos" # La pantalla que se verá por defecto al inicio
+        self.pantalla_activa = "Combate" # La pantalla que se verá por defecto al inicio
         self.barra_navegacion = NavegadorSuperior(self, self.controlador, self.pantallas.values())
 
         self.title("GM place")

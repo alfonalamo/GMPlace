@@ -3,6 +3,7 @@ from abc import abstractmethod
 from tkinter import ttk
 
 from constantes import estilos, config
+from interfaz.formulario import FormularioPJ
 from interfaz.pantalla import Pantalla
 from interfaz.navegador import NavegadorLateral
 
@@ -94,76 +95,61 @@ class Combate(Pantalla):
         self.carga_widgets()
 
     def carga_widgets(self):
+        frame_personajes = tk.Frame(self)
         tk.Label(
-            self,
-            # text= "Hola aventurero",
-            textvariable= self.nombre,
-            justify= tk.CENTER,
-            **estilos.ESTILO_DEFAULT
-            ).pack(
-            side= tk.TOP,
+            frame_personajes,
+            text="placeholder",
+            width=20
+            ).pack()
+        frame_personajes.pack(
+            side= tk.LEFT,
             fill= tk.BOTH,
             expand= True,
-            padx= 22,
-            pady= 11
+            padx= 0,
+            pady= 0
         )
-        opciones = tk.Frame(self)
-        opciones.configure(background=estilos.Color.FONDO)
-        opciones.pack(
-            side= tk.TOP,
+        frame_notas = tk.Frame(self)
+
+        self.texto_resumen = tk.Text(frame_notas)
+        self.texto_resumen.pack(
+            side=tk.TOP,
+            fill=tk.BOTH,
+            expand=True,
+            padx=10,
+            pady=0
+        )
+
+        self.mensaje = tk.StringVar(frame_notas)
+
+        frame_comentario = tk.Frame(frame_notas)
+        comentario = tk.Entry(frame_comentario,textvariable=self.mensaje)
+        comentario.pack(
+            side=tk.LEFT,
+            fill=tk.X,
+            expand=True,
+            padx=0,
+            pady=0
+        )
+        tk.Button(frame_comentario,text="enviar", command=self.actualizar_texto).pack(side= tk.BOTTOM)
+
+        frame_comentario.pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=True,
+            padx=10,
+            pady=0
+        )
+        frame_notas.pack(
+            side= tk.LEFT,
             fill= tk.BOTH,
             expand= True,
-            padx= 22,
-            pady=5
-        )
-        tk.Label(
-            opciones,
-            text= "Blablabla",
-            justify= tk.CENTER,
-            **estilos.ESTILO_DEFAULT
-        ).pack(
-            side= tk.TOP,
-            fill= tk.BOTH,
-            expand= True
+            padx= 0,
+            pady= 10
         )
 
-        # self.nombre_master.pack()
-        tk.Button(
-            self,
-            text= "Nombre",
-            # command= self.update_nombre,
-            **estilos.ESTILO_DEFAULT,
-            relief= tk.GROOVE,
-            activebackground=estilos.Color.FONDO,
-            activeforeground=estilos.Color.TEXTO_BLANCO,
-        ).pack(
-            side= tk.TOP,
-            fill=tk.BOTH,
-            expand=True,
-            padx=5,
-            pady=5
-        )
-
-        tk.Button(
-            self,
-            text= "Inicio",
-            # command= self.ir_campagna,
-            command= lambda: self.controlador.muestra_pantalla(Inicio),
-            **estilos.ESTILO_DEFAULT,
-            relief= tk.GROOVE,
-            activebackground=estilos.Color.FONDO,
-            activeforeground=estilos.Color.TEXTO_BLANCO,
-        ).pack(
-            side= tk.TOP,
-            fill=tk.BOTH,
-            expand=True,
-            padx=5,
-            pady=5
-        )
-
-    #
-    # def update_nombre(self):
-    #     print(self.nombre.set(f"Hola {self.nombre_master.get()}"))
+    def actualizar_texto(self):
+        self.texto_resumen.insert(tk.END,self.mensaje.get())
+        self.texto_resumen.insert(tk.END,"\n")
 
 class Elementos(Pantalla):
     def __init__(self, contenedor, controlador):
@@ -199,6 +185,9 @@ class Elementos(Pantalla):
             padx= 0,
             pady= 0
         )
+        self.contenedor_principal.configure(background=estilos.Color.FONDO)
+        self.contenedor_principal.grid_columnconfigure(0, weight=1)
+        self.contenedor_principal.grid_rowconfigure(0, weight=1)
 
 class Subpantalla(Pantalla):
     def __init__(self, contenedor, controlador, nombre):
@@ -210,20 +199,21 @@ class Subpantalla(Pantalla):
         nuevo_elemento = tk.Button(
             self,
             text=f"Añadir elemento a {self.nombre}",
-            command=lambda: tk.Toplevel(),
+            command=lambda: FormularioPJ(self,self.controlador),
             background="blue"
             )
 
-        # nuevo_elemento.pack(
-        #     side=tk.LEFT,
-        #     fill=tk.BOTH,
-        #     expand=True,
-        #     padx=5,
-        #     pady=20)
-        # tk.Text(self).pack(
-        #     side=tk.LEFT,
-        #     fill=tk.BOTH,
-        #     expand=True,
-        #     padx=5,
-        #     pady=20)
-        tk.Label(self, text=self.nombre).pack(side=tk.BOTTOM)
+        nuevo_elemento.pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=True,
+            padx=5,
+            pady=0)
+
+        tk.Text(self).pack(
+            side=tk.TOP,
+            fill=tk.BOTH,
+            expand=True,
+            padx=5,
+            pady=20)
+        # tk.Label(self, text=self.nombre).pack(side=tk.BOTTOM)

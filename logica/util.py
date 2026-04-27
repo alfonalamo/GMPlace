@@ -8,3 +8,8 @@ def tirar_dado(n_caras):
     # print(f"El d{n_caras} ha salido {resultado}")
     return resultado
 
+def obtener_caracteristicas(dic):
+    dic_traducido = {}
+    for key,value in dic.items:
+        dic_traducido[key] = value.get()
+    print(dic_traducido)

@@ -21,7 +21,7 @@ class BotonNavegador(tk.Button):
             # activebackground=estilos.Color.FONDO,
             activebackground=estilos.Color.FONDO,
             activeforeground=estilos.Color.TEXTO,
-            disabledforeground="red",
+            disabledforeground=estilos.COLOR_FONDO,
             justify=tk.LEFT
         )
 
