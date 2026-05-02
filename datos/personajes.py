@@ -24,7 +24,6 @@ class Personaje:
         self.defensa = caracteristicas["CON"] # La CA, es decir, la dificultad de que le de un golpe
         self.vida_max = vida_max
         self.vida_actual = vida_max # Cuando se crea un personaje tiene la vida max, luego se modifica
-        self.vivo = True # Booleano que indica si el pj está vivo o muerto
         self.nivel = 1
         print(f"Ha nacido {self.nombre}")
 
@@ -46,7 +45,6 @@ class Personaje:
         self.vida_actual -= dagno
         if self.vida_actual <= 0:
             self.vida_actual = 0
-            self.vivo = False
             mensaje = f"{self.nombre} ha muerto, RIP"
         else:
             mensaje = f"{self.nombre} ha recibido {dagno} puntos de daño, le quedan {self.vida_actual} puntos de vida"

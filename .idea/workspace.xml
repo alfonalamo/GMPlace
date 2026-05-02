@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6065280e-dccc-4b15-84dc-90c990a42ce8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/interfaz/formulario.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constantes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/constantes/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaz/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaz/pantalla.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/pantalla.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaz/pantallas.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/pantallas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datos/personajes.py" beforeDir="false" afterPath="$PROJECT_DIR$/datos/personajes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interfaz/ventana.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/ventana.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logica/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/logica/util.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +47,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Desarrollo/GMPlace/interfaz&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
   <component name="RecentsManager">
