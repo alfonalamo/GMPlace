@@ -1,2 +1,0 @@
-meter CA y vida_max en caracteristicas
-quitar vivo si no se necesita

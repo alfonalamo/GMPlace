@@ -6,6 +6,8 @@ from constantes import estilos, config
 from interfaz.formulario import FormularioPJ
 from interfaz.pantalla import Pantalla
 from interfaz.navegador import NavegadorLateral
+from logica import util
+
 
 class Inicio(Pantalla):
     def __init__(self, contenedor, controlador):
@@ -15,9 +17,9 @@ class Inicio(Pantalla):
     def carga_widgets(self):
         tk.Label(
             self,
-            text= "Hola aventurero, aqui empieza",
+            text= f"Hola {self.controlador.nombre_master}, aqui empieza",
             justify= tk.LEFT,
-            **estilos.ESTILO_DEFAULT
+            **estilos.ESTILO_PREDETERMINADO
             ).pack(
             side= tk.TOP,
             fill= tk.BOTH,
@@ -38,7 +40,7 @@ class Inicio(Pantalla):
             opciones,
             text= "Blablabla",
             justify= tk.CENTER,
-            **estilos.ESTILO_DEFAULT
+            **estilos.ESTILO_PREDETERMINADO
         ).pack(
             side= tk.TOP,
             fill= tk.BOTH,
@@ -62,7 +64,7 @@ class Inicio(Pantalla):
                 highlightcolor="red",
                 activebackground= estilos.Color.FONDO,
                 activeforeground= estilos.Color.TEXTO_BLANCO,
-                **estilos.ESTILO_DEFAULT
+                **estilos.ESTILO_PREDETERMINADO
             ).pack(
                 side= tk.LEFT,
                 fill= tk.BOTH,
@@ -76,7 +78,7 @@ class Inicio(Pantalla):
             text= "CAMPAÑA",
             # command= self.ir_campagna,
             command= lambda: self.controlador.muestra_pantalla("Campaña"),
-            **estilos.ESTILO_DEFAULT,
+            **estilos.ESTILO_PREDETERMINADO,
             relief= tk.FLAT,
             # activebackground=estilos.Color.FONDO,
             activebackground=estilos.Color.FONDO,
@@ -92,15 +94,17 @@ class Inicio(Pantalla):
 class Combate(Pantalla):
     def __init__(self, contenedor, controlador):
         super().__init__(contenedor, controlador, "Combate")
+        self.lista_personajes = None
+        self.mensaje = None
+        self.texto_resumen = None
         self.carga_widgets()
+        self.controlador.actualizar_lista_personajes()
 
     def carga_widgets(self):
-        frame_personajes = tk.Frame(self)
-        tk.Label(
-            frame_personajes,
-            text="placeholder",
-            width=20
-            ).pack()
+        frame_personajes = tk.Frame(
+            self,
+            background=estilos.Color.FONDO,
+            )
         frame_personajes.pack(
             side= tk.LEFT,
             fill= tk.BOTH,
@@ -108,9 +112,75 @@ class Combate(Pantalla):
             padx= 0,
             pady= 0
         )
-        frame_notas = tk.Frame(self)
 
-        self.texto_resumen = tk.Text(frame_notas)
+        frame_personajes_scrolleable = tk.Frame(
+            frame_personajes
+        )
+        frame_personajes_scrolleable.pack(
+            side=tk.TOP,
+            padx=10,
+            pady=10,
+            fill=tk.BOTH,
+            expand=True
+        )
+        # barra_scroll_personajes = tk.Scrollbar(
+        #     frame_personajes_scrolleable,
+        #     background=estilos.Color.FONDO_NAV,
+        #     activebackground=estilos.Color.FONDO_NAV
+        # )
+        # barra_scroll_personajes.pack(
+        #     side=tk.RIGHT,
+        #     fill=tk.Y,
+        #     expand=False
+        # )
+        self.lista_personajes = tk.Listbox(
+            frame_personajes_scrolleable,
+            background=estilos.Color.FONDO
+            # yscrollcommand=barra_scroll_personajes.set
+        )
+        self.lista_personajes.pack(
+            side=tk.LEFT,
+            fill=tk.BOTH,
+            expand=True
+        )
+        self.controlador.listbox_personajes = self.lista_personajes
+
+
+        tk.Button(
+            frame_personajes,
+            text="Añadir enemigo",
+            background=estilos.Color.COMPONENTE,
+            **estilos.ESTILO_PREDETERMINADO,
+            width=20
+            ).pack()
+
+        tk.Button(
+            frame_personajes,
+            text="Actualizar",
+            background=estilos.Color.COMPONENTE,
+            **estilos.ESTILO_PREDETERMINADO,
+            width=20
+            # command=self.actualizar_lista_personajes
+            ).pack()
+
+
+        frame_notas = tk.Frame(
+            self,
+            background=estilos.Color.FONDO
+            )
+
+
+
+        # barra_scroll_comentario = tk.Scrollbar(
+        #     frame_notas,
+        #     background=estilos.Color.FONDO_NAV,
+        #     activebackground=estilos.Color.FONDO_NAV
+        # )
+
+        self.texto_resumen = tk.Text(
+            frame_notas
+            # yscrollcommand=barra_scroll_comentario.set
+        )
         self.texto_resumen.pack(
             side=tk.TOP,
             fill=tk.BOTH,
@@ -119,25 +189,42 @@ class Combate(Pantalla):
             pady=0
         )
 
+
+        # barra_scroll_comentario.pack(
+        #     side=tk.RIGHT,
+        #     fill=tk.Y,
+        #     expand=False
+        # )
+
+        self.controlador.cuadro_historial = self.texto_resumen
+
         self.mensaje = tk.StringVar(frame_notas)
 
-        frame_comentario = tk.Frame(frame_notas)
-        comentario = tk.Entry(frame_comentario,textvariable=self.mensaje)
-        comentario.pack(
+        frame_comentario = tk.Frame(
+            frame_notas,
+            background=estilos.Color.FONDO
+            )
+        self.comentario = tk.Entry(frame_comentario,textvariable=self.mensaje)
+        self.comentario.pack(
             side=tk.LEFT,
-            fill=tk.X,
-            expand=True,
-            padx=0,
-            pady=0
-        )
-        tk.Button(frame_comentario,text="enviar", command=self.actualizar_texto).pack(side= tk.BOTTOM)
-
-        frame_comentario.pack(
-            side=tk.TOP,
             fill=tk.X,
             expand=True,
             padx=10,
             pady=0
+        )
+        self.comentario.bind("<Return>", self.texto_por_intro)
+        tk.Button(frame_comentario,text="enviar", command=self.actualizar_texto).pack(
+            side= tk.LEFT,
+            padx=5
+
+        )
+
+        frame_comentario.pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=False,
+            padx=0,
+            pady=10
         )
         frame_notas.pack(
             side= tk.LEFT,
@@ -147,23 +234,36 @@ class Combate(Pantalla):
             pady= 10
         )
 
+    def texto_por_intro(self,event):
+        self.actualizar_texto()
+
     def actualizar_texto(self):
-        self.texto_resumen.insert(tk.END,self.mensaje.get())
-        self.texto_resumen.insert(tk.END,"\n")
+        if not self.mensaje.get().strip() == "" :
+            self.controlador.escribir_en_historial(self.mensaje.get())
+            self.comentario.delete(0,tk.END)
+
+    # def actualizar_lista_personajes(self):
+    #     self.lista_personajes.delete(0,tk.END)
+    #     self.controlador.obtener_personajes()
+    #     try:
+    #         for personaje in self.controlador.personajes.values():
+    #             self.lista_personajes.insert(tk.END, personaje.nombre)
+    #     except AttributeError:
+    #         print("dsandsla", self.controlador.personajes)
+    #         pass
 
 class Elementos(Pantalla):
     def __init__(self, contenedor, controlador):
         super().__init__(contenedor, controlador, "Elementos")
-        categorias =  ("Objetos", "Personajes", "Enemigos")
+        categorias =  ("Personajes", "Enemigos", "Objetos")
+        self.pantalla_activa = "Personajes" # La pantalla que se verá por defecto al inicio
         self.pantallas = {}
-        self.contenedor_principal = tk.Frame(self, background="green")
+        self.contenedor_principal = tk.Frame(self)
 
         for categoria in categorias:
             pantalla = Subpantalla(self.contenedor_principal, self.controlador, categoria)
             self.pantallas[str(pantalla.nombre)] = pantalla
 
-        print("pantallas ", self.pantallas)
-        self.pantalla_activa = "Personajes" # La pantalla que se verá por defecto al inicio
         controlador.muestra_pantalla(self, self.pantalla_activa)
 
         self.barra_navegacion = NavegadorLateral(self, self.controlador, self.pantallas.values())
@@ -192,21 +292,22 @@ class Elementos(Pantalla):
 class Subpantalla(Pantalla):
     def __init__(self, contenedor, controlador, nombre):
         super().__init__(contenedor, controlador, nombre)
+        self.grid(row=0, column=0, sticky=tk.NSEW)
         self.carga_widgets()
 
     def carga_widgets(self):
-        print("self",self)
         nuevo_elemento = tk.Button(
             self,
             text=f"Añadir elemento a {self.nombre}",
-            command=lambda: FormularioPJ(self,self.controlador),
-            background="blue"
+            command=self.abre_formulario,
+            background=estilos.Color.COMPONENTE,
+            foreground=estilos.Color.TEXTO_BLANCO,
             )
 
         nuevo_elemento.pack(
             side=tk.TOP,
             fill=tk.X,
-            expand=True,
+            expand=False,
             padx=5,
             pady=0)
 
@@ -215,5 +316,15 @@ class Subpantalla(Pantalla):
             fill=tk.BOTH,
             expand=True,
             padx=5,
-            pady=20)
+            pady=10)
         # tk.Label(self, text=self.nombre).pack(side=tk.BOTTOM)
+
+    def abre_formulario(self):
+        if self.nombre == "Personajes":
+            FormularioPJ(self, self.controlador)
+        else:
+            toplevel = tk.Toplevel(
+                self
+            )
+            tk.Label(toplevel,text="Formulario no creado aún, sorry").pack()
+            tk.Button(toplevel, text="Cerrar", command=lambda: toplevel.destroy()).pack(fill=tk.X)

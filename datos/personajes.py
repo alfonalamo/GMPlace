@@ -1,31 +1,20 @@
 from abc import ABC
 from logica import util
 
-# class Personaje (ABC):
-#     """Clase abstracta de la que heredan todos los tipos de personajes"""
-    # def __init__(self, nombre, clase,  caracteristicas, vida_max):
-    #     self.nombre = self.tratar_nombre(nombre) # Usar solo si da problemas los nombres con espacio
-    #     self.clase = clase
-    #     self.nivel = 0
-    #     self.inventario = Inventario() # ToDo: Pensar como gestionar esto, igual con una clase inventario
-    #     self.caracteristicas = caracteristicas # Esto va a ser un diccionario
-    #     self.defensa = defensa # La CA, es decir, la dificultad de que le de un golpe
-    #     self.vida_max = vida_max
-    #     self.vida_actual = vida_max # Cuando se crea un personaje tiene la vida max, luego se modifica
-    #     self.vivo = True # Booleano que indica si el pj está vivo o muerto
-    #     self.nivel = 1
-    #     self.inventario = []
-
 class Personaje:
-    def __init__(self, nombre, caracteristicas, vida_max):
-        self.nombre = self.tratar_nombre(nombre) # Usar solo si da problemas los nombres con espacio
-        self.nivel = 0
+    def __init__(self, nombre, tipo, jugador, descripcion, caracteristicas, nivel=1):
+        self.nombre = nombre # Usar solo si da problemas los nombres con espacio
+        self.id = util.tratar_nombre(nombre) # Usar solo si da problemas los nombres con espacio
+        self.tipo = tipo
+        self.jugador = jugador
+        self.descripcion = descripcion
+        self.nivel = nivel
         self.caracteristicas = caracteristicas # Esto va a ser un diccionario
+        self.modificadores = {}
+        self.calcular_modificadores(caracteristicas)
         self.defensa = caracteristicas["CON"] # La CA, es decir, la dificultad de que le de un golpe
-        self.vida_max = vida_max
-        self.vida_actual = vida_max # Cuando se crea un personaje tiene la vida max, luego se modifica
-        self.nivel = 1
-        print(f"Ha nacido {self.nombre}")
+        self.pv_max = util.calcular_pv(caracteristicas["CON"])
+        self.pv_actual = self.pv_max # Cuando se crea un personaje tiene la vida max, luego se modifica
 
     def recibir_ataque(self, ataque, dagno):
         if ataque > self.defensa:
@@ -36,27 +25,22 @@ class Personaje:
             mensaje = f"{self.nombre} para el ataque, no recibe daño"
             util.mostrar_mensaje(mensaje)
 
-    def tratar_nombre(self,nombre_bruto):
-        nombre_bruto = str(nombre_bruto).title()
-        nombre_tratado = nombre_bruto.replace(" ", "_")
-        return nombre_tratado
-
     def recibir_dagno(self, dagno):
-        self.vida_actual -= dagno
-        if self.vida_actual <= 0:
-            self.vida_actual = 0
+        self.pv_actual -= dagno
+        if self.pv_actual <= 0:
+            self.pv_actual = 0
             mensaje = f"{self.nombre} ha muerto, RIP"
         else:
-            mensaje = f"{self.nombre} ha recibido {dagno} puntos de daño, le quedan {self.vida_actual} puntos de vida"
+            mensaje = f"{self.nombre} ha recibido {dagno} puntos de daño, le quedan {self.pv_actual} puntos de vida"
         util.mostrar_mensaje(mensaje)
 
     def curarse(self, puntos_curacion):
-        self.vida_actual += puntos_curacion
-        if self.vida_actual > self.vida_max:
-            self.vida_actual = self.vida_max
+        self.pv_actual += puntos_curacion
+        if self.pv_actual > self.pv_max:
+            self.pv_actual = self.pv_max
             mensaje = f"{self.nombre} ha recuperado todos los puntos de vida"
         else:
-            mensaje = f"{self.nombre}  ha recuperado {puntos_curacion} tiene {self.vida_actual} puntos de vida"
+            mensaje = f"{self.nombre}  ha recuperado {puntos_curacion} tiene {self.pv_actual} puntos de vida"
         util.mostrar_mensaje(mensaje)
 
     # def modificar_vida(self,mod):
@@ -81,6 +65,17 @@ class Personaje:
 
     def calcular_dagno(self, arma=None):
         return 0
+
+    def calcular_modificadores(self, caracteristicas):
+        for clave, valor in caracteristicas.items():
+            self.modificadores[clave] = util.calcular_modificador(valor)
+
+    def to_string(self):
+        return (f"{self.nombre}, es un {self.tipo} de {self.jugador}, "
+                f"Caracteristicas: {self.caracteristicas}, "
+                f"Modificadores: {self.modificadores}"
+                f"PV: {self.pv_actual}, CA: {self.defensa}"
+                f"Descripción :  {self.descripcion}")
 
 # class PersonajeJugable(Personaje):
 #     def __init__(self, nombre, clase, inventario, caracteristicas,jugador):

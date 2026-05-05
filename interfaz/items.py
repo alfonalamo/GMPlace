@@ -13,21 +13,18 @@ class BotonNavegador(tk.Button):
         self.controlador = controlador
         self.navegador = navegador
         super().__init__(
-            navegador,
+            self.navegador,
             text=pantalla,
             command= self.comando,
-            **estilos.ESTILO_DEFAULT,
+            **estilos.ESTILO_PREDETERMINADO,
             relief=tk.FLAT,
-            # activebackground=estilos.Color.FONDO,
             activebackground=estilos.Color.FONDO,
             activeforeground=estilos.Color.TEXTO,
             disabledforeground=estilos.COLOR_FONDO,
             justify=tk.LEFT
         )
 
-    # ToDo : desactivar el botón del menú activo
     def comando(self):
-        # self.controlador.reactiva_boton()
         self.navegador.boton_activo.activar()
         self.controlador.muestra_pantalla(self.navegador.contenedor,self.pantalla)
         self.desactivar()
