@@ -1,7 +1,10 @@
 import tkinter as tk
 from constantes import estilos
 from interfaz.navegador import Navegador, NavegadorSuperior
-from interfaz.pantallas import Inicio, Combate, Elementos
+from interfaz.pantalla_elementos import Elementos
+from interfaz.pantalla_combate import Combate
+from interfaz.pantalla_inicio import Inicio
+
 
 class Ventana(tk.Tk):
     def __init__(self, controlador):
@@ -9,7 +12,7 @@ class Ventana(tk.Tk):
         # Defino las características principales de la ventana principal
         self.title("GM place")
         self.geometry("600x600")
-        self.minsize(200,200)
+        self.minsize(600,600)
         self.config(background=estilos.Color.FONDO)
 
         self.controlador = controlador

@@ -2,7 +2,7 @@ from abc import ABC
 from logica import util
 
 class Personaje:
-    def __init__(self, nombre, tipo, jugador, descripcion, caracteristicas, nivel=1):
+    def __init__(self, nombre, tipo, jugador, descripcion, caracteristicas, pv, campagna, nivel=1):
         self.nombre = nombre # Usar solo si da problemas los nombres con espacio
         self.id = util.tratar_nombre(nombre) # Usar solo si da problemas los nombres con espacio
         self.tipo = tipo
@@ -14,7 +14,8 @@ class Personaje:
         self.calcular_modificadores(caracteristicas)
         self.defensa = caracteristicas["CON"] # La CA, es decir, la dificultad de que le de un golpe
         self.pv_max = util.calcular_pv(caracteristicas["CON"])
-        self.pv_actual = self.pv_max # Cuando se crea un personaje tiene la vida max, luego se modifica
+        self.pv_actual = pv
+        self.campagna = campagna
 
     def recibir_ataque(self, ataque, dagno):
         if ataque > self.defensa:

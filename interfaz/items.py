@@ -12,17 +12,8 @@ class BotonNavegador(tk.Button):
         self.pantalla = pantalla
         self.controlador = controlador
         self.navegador = navegador
-        super().__init__(
-            self.navegador,
-            text=pantalla,
-            command= self.comando,
-            **estilos.ESTILO_PREDETERMINADO,
-            relief=tk.FLAT,
-            activebackground=estilos.Color.FONDO,
-            activeforeground=estilos.Color.TEXTO,
-            disabledforeground=estilos.COLOR_FONDO,
-            justify=tk.LEFT
-        )
+        super().__init__(self.navegador)
+        self.config(text=pantalla, command= self.comando, **estilos.ESTILO_PREDETERMINADO_BOTON)
 
     def comando(self):
         self.navegador.boton_activo.activar()
@@ -35,3 +26,75 @@ class BotonNavegador(tk.Button):
 
     def activar(self):
         self.configure(state=tk.NORMAL)
+
+class BotonEstandar(tk.Button):
+    def __init__(self, contenedor, texto, comando):
+        super().__init__(contenedor)
+        self.config(text=texto, command=comando, **estilos.ESTILO_PREDETERMINADO_BOTON)
+
+class LabelEstandar(tk.Label):
+    def __init__(self, contenedor, texto):
+        super().__init__(contenedor)
+        self.config(text=texto, **estilos.ESTILO_PREDETERMINADO )
+
+class ListBoxEstandar(tk.Listbox):
+    def __init__(self, contenedor):
+        super().__init__(contenedor)
+        self.config(background=estilos.Color.FONDO, **estilos.ESTILO_PREDETERMINADO)
+
+    def get_seleccion(self):
+        if self.curselection():
+            indice = self.curselection()[0]
+            return self.get(indice)
+
+    def actualizar(self, dic):
+        self.delete(0,tk.END)
+        try:
+            for nombre_pj, objeto_pj in dic.items():
+                self.insert(tk.END, nombre_pj)
+                if objeto_pj.tipo == "pj":
+                    self.itemconfig(tk.END, bg=estilos.Color.ALIADO)
+                else:
+                    self.itemconfig(tk.END, bg="lightred")
+        except AttributeError:
+            print("error", dic)
+            pass
+        
+class ListBoxPersonajes(ListBoxEstandar)   :     
+    def __init__(self, contenedor):
+        super().__init__(contenedor)
+        
+    def actualizar(self, dic_pers):
+        self.delete(0,tk.END)
+        try:
+            for nombre_pj, objeto_pj in dic_pers.items():
+                self.insert(tk.END, f"{nombre_pj} - {objeto_pj.jugador}")
+                if objeto_pj.tipo == "pj":
+                    self.itemconfig(tk.END, bg=estilos.Color.ALIADO)
+                else:
+                    self.itemconfig(tk.END, bg="red")
+        except AttributeError:
+            print("error", dic_pers)
+            pass
+
+    def get_seleccion(self):
+        if self.curselection():
+            indice = self.curselection()[0]
+            return self.get(indice).split("-")[0].strip(" ")
+
+
+class ListBoxCampagnas(ListBoxEstandar)   :
+    def __init__(self, contenedor):
+        super().__init__(contenedor)
+
+    def llenar_lista(self, tupla):
+        self.delete(0,tk.END)
+        for camp in tupla:
+            self.insert(0,f"{camp[0]} - {camp[1]}")
+
+    def get_seleccion(self):
+        if self.curselection():
+            indice = self.curselection()
+            campagna = self.get(indice).split("-")[0].strip(" ")
+            master = self.get(indice).split("-")[1].strip(" ")
+            return campagna, master

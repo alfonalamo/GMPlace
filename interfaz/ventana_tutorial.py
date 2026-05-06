@@ -1,5 +1,7 @@
 import tkinter as tk
+from tkinter import messagebox as msg
 from constantes import textos, estilos
+from interfaz import items
 
 
 class Tutorial(tk.Tk):
@@ -10,10 +12,9 @@ class Tutorial(tk.Tk):
         self.config(background=estilos.Color.FONDO_NAV)
         self.nombre_master = tk.StringVar()
         self.nombre_campagna = tk.StringVar()
-        tk.Label(
-            text=textos.tutorial,
-            background=estilos.Color.FONDO_NAV,
-            **estilos.ESTILO_PREDETERMINADO
+        items.LabelEstandar(
+            self,
+            textos.tutorial
         ).pack(
             side=tk.TOP,
             fill=tk.BOTH,
@@ -21,30 +22,26 @@ class Tutorial(tk.Tk):
             pady=20,
             padx=10
         )
-        tk.Label(
-            text="Nombre del director de juego:",
-            background=estilos.Color.FONDO_NAV,
-            **estilos.ESTILO_PREDETERMINADO
+        items.LabelEstandar(
+            self,
+            "Nombre del director de juego:"
         ).pack()
         entrada_nombre = tk.Entry(textvariable=self.nombre_master)
         entrada_nombre.pack()
         entrada_nombre.insert(tk.END,"Master")
-        tk.Label(
-            text="Nombre de la campaña:",
-            background=estilos.Color.FONDO_NAV,
-            **estilos.ESTILO_PREDETERMINADO
+        items.LabelEstandar(
+            self,
+            "Nombre de la campaña:"
         ).pack()
         entrada_campagna = tk.Entry(textvariable=self.nombre_campagna)
         entrada_campagna.pack(
            pady=5
         )
         entrada_campagna.insert(tk.END,"Campaña")
-        tk.Button(
-            text="Crear campaña",
-            **estilos.ESTILO_PREDETERMINADO,
-            activebackground=estilos.Color.FONDO,
-            activeforeground=estilos.Color.TEXTO,
-            command=self.recoger_datos
+        items.BotonEstandar(
+            self,
+            "Crear campaña",
+            self.recoger_datos
         ).pack(
             pady=10
         )
@@ -52,8 +49,12 @@ class Tutorial(tk.Tk):
     def recoger_datos(self):
         config = {
             "nombre" : self.nombre_master.get(),
-            "campagna" :self.nombre_campagna.get()
+            "campagna" :self.nombre_campagna.get().replace(" ","_")
         }
-        self.controlador.escribir_config(config)
-        self.destroy()
-
+        if self.controlador.escribir_config(config):
+            msg.showinfo("OK", "Campaña creada correctamente")
+            self.controlador.continuar_arranque()
+            self.destroy()
+        else:
+            msg.showerror("No deberias ver esto", "La campaña existe")
+            # pass
