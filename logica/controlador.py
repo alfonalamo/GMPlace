@@ -7,31 +7,32 @@ from interfaz.ventana_tutorial import Tutorial
 from logica import util, util_bbdd
 import tkinter as tk
 from datos.personajes import Personaje
-
 from interfaz.ventana import Ventana
 from interfaz.form_manejarpj import FormularioVerPJ
 
 
 class Controlador:
     def __init__(self):
+        # Elementos graficos
         self.ventana = None
-        self.campagnas = None
+        self.cuadro_historial = None
+        self.listbox_personajes = None
+        self.listbox_elem_aliados = None
+        self.listbox_elem_enemigos = None
+
+        self.config = None
+        self.historial = None # Objeto tipo Path()
         self.ruta_miscelanea = Path("miscelanea")
         self.ruta_config = Path("miscelanea/config.json") # En el json se guarda la campaña en uso
-        self.config = None
         self.nombre_master = ""
         self.campagna = ""
         self.personajes = {} # TODOS LOS PERSONAJES
         self.aliados = {}
         self.enemigos = {}
-        self.historial = None # Este es el fichero del historial
-        self.cuadro_historial = None  # Esto va a ser util para actualizar desde cualquier sitio
-        self.listbox_personajes = None  # Esto va a ser util para actualizar desde cualquier sitio
-        self.listbox_elem_aliados = None  # Esto va a ser util para actualizar desde cualquier sitio
-        self.listbox_elem_enemigos = None
+
         self.arranque()
 
-
+    # Metodos de inicio
     def arranque(self):
         self.inicializar()
         self.arranque_bbdd() # crear las bases de datos si no existen
@@ -57,13 +58,29 @@ class Controlador:
         print("rearanque ", campagna)
         self.master = master
         datos_config = {"nombre": master, "campagna": campagna }
-        self.escribir_config_ra(datos_config)
+        self.escribir_config_rearranque(datos_config)
         self.ventana.destroy()
         self.arranque()
 
     def arranque_bbdd(self):
         util_bbdd.crear_tabla_personajes()
         util_bbdd.crear_tabla_campa()
+
+    def inicializar(self):
+        self.ventana = None
+        self.ruta_miscelanea = Path("miscelanea")
+        self.ruta_config = Path("miscelanea/config.json") # En el json se guarda la campaña en uso
+        self.nombre_master = ""
+        self.campagna = ""
+        self.personajes = {} # TODOS LOS PERSONAJES
+        self.aliados = {}
+        self.enemigos = {}
+        self.config = None
+        self.historial = None # Este es el fichero del historial
+        self.cuadro_historial = None  # Esto va a ser util para actualizar desde cualquier sitio
+        self.listbox_personajes = None  # Esto va a ser util para actualizar desde cualquier sitio
+        self.listbox_elem_aliados = None  # Esto va a ser util para actualizar desde cualquier sitio
+        self.listbox_elem_enemigos = None
 
     def primer_uso(self):
         self.ruta_config.touch()
@@ -80,7 +97,7 @@ class Controlador:
             print(self.config)
         return True # Esto lleva a continuar_arranque
 
-    def escribir_config_ra(self, datos_config):
+    def escribir_config_rearranque(self, datos_config):
         datos_config["historial"] = self.define_ruta_historial(datos_config["campagna"])
         with self.ruta_config.open("w", encoding="utf-8") as conf:
             print("dc",datos_config)
@@ -106,91 +123,16 @@ class Controlador:
                 self.cuadro_historial.insert(0.0,linea)
         self.cuadro_historial.configure(state=tk.DISABLED)
 
-    def escribir_en_historial(self, msj):
-        msj = util.crear_mensaje(msj)
-        with self.historial.open("a", encoding="utf-8") as his:
-            his.write(msj)
-        self.cuadro_historial.configure(state=tk.NORMAL)
-        self.cuadro_historial.insert(0.0,msj)
-        self.cuadro_historial.configure(state=tk.DISABLED)
-
-    def actualizar_listas(self):
-        self.actualizar_lista_pers()
-
-    def actualizar_lista_pers(self):
-        self.obtener_personajes()
-        self.obtener_aliados()
-        self.obtener_enemigos()
-        self.listbox_personajes.actualizar(self.personajes)
-        try:
-            self.listbox_elem_aliados.actualizar(self.aliados)
-        except AttributeError:
-            pass
-        try:
-            self.listbox_elem_enemigos.actualizar(self.enemigos)
-        except AttributeError:
-            pass
-    def obtener_personajes(self):
-        self.personajes = {}
-        print(f"Estoy en campaña {self.campagna}")
-        lista_personajes = util_bbdd.leer_personajes(self.campagna)
-        for tupla in lista_personajes:
-            nombre = tupla[1]
-            tipo = tupla[3]
-            jugador = tupla[4]
-            descripcion = tupla[2]
-            nivel = tupla[5]
-            pv = tupla[6]
-            campagna = tupla[13]
-            caracteristicas = {"FUE": tupla[7], "CON": tupla[8], "SAB": tupla[9], "INT": tupla[10], "DES": tupla[11],
-                               "CAR": tupla[12]}
-            personaje = Personaje(nombre, tipo, jugador, descripcion, caracteristicas, pv, campagna, nivel)
-            self.personajes[personaje.id] = personaje
-
-    def obtener_aliados(self):
-        self.aliados = {}
-        print(f"Estoy en campaña {self.campagna}")
-        lista_personajes = util_bbdd.leer_aliados(self.campagna)
-        for tupla in lista_personajes:
-            nombre = tupla[1]
-            tipo = tupla[3]
-            jugador = tupla[4]
-            descripcion = tupla[2]
-            nivel = tupla[5]
-            pv = tupla[6]
-            campagna = tupla[13]
-            caracteristicas = {"FUE": tupla[7], "CON": tupla[8], "SAB": tupla[9], "INT": tupla[10], "DES": tupla[11],
-                               "CAR": tupla[12]}
-            personaje = Personaje(nombre, tipo, jugador, descripcion, caracteristicas, pv, campagna, nivel)
-            self.aliados[personaje.id] = personaje
-
-    def obtener_enemigos(self):
-        self.enemigos = {}
-        print(f"Estoy en campaña {self.campagna}")
-        lista_personajes = util_bbdd.leer_enemigos(self.campagna)
-        for tupla in lista_personajes:
-            nombre = tupla[1]
-            tipo = tupla[3]
-            jugador = tupla[4]
-            descripcion = tupla[2]
-            nivel = tupla[5]
-            pv = tupla[6]
-            campagna = tupla[13]
-            caracteristicas = {"FUE": tupla[7], "CON": tupla[8], "SAB": tupla[9], "INT": tupla[10], "DES": tupla[11],
-                               "CAR": tupla[12]}
-            personaje = Personaje(nombre, tipo, jugador, descripcion, caracteristicas, pv, campagna, nivel)
-            self.enemigos[personaje.id] = personaje
-
-    def recuperar_info_campas(self):
-        campagnas = util_bbdd.leer_campas()
-        return campagnas
-
-
     def cargar_config(self):
         with self.ruta_config.open("r", encoding="utf-8") as conf:
                 config = json.load(conf)
                 self.nombre_master = config["nombre"]
                 self.campagna = config["campagna"]
+
+    # Metodos intermediarios con base de datos
+    def recuperar_info_campas(self):
+        campagnas = util_bbdd.leer_campas()
+        return campagnas
 
     def crear_personaje(self, nombre, tipo, jugador, descripcion, caracteristicas, pv):
         personaje = Personaje(nombre, tipo, jugador, descripcion, caracteristicas, pv, self.campagna)
@@ -216,7 +158,35 @@ class Controlador:
             return True
         else: return False
 
-    def muestra_pantalla(self, ventana, pantalla):
+    def cargar_dicc_personajes(self):
+        lista_pers = self.obtener_personajes()
+        for personaje in lista_pers:
+            self.personajes[personaje.id] = personaje
+
+    def cargar_dicc_aliados(self):
+        lista_pers = self.obtener_aliados()
+        for personaje in lista_pers:
+            self.aliados[personaje.id] = personaje
+
+    def cargar_dicc_enemigos(self):
+        lista_pers = self.obtener_enemigos()
+        for personaje in lista_pers:
+            self.enemigos[personaje.id] = personaje
+
+    def obtener_personajes(self):
+        lista_bruta = util_bbdd.recuperar_personajes(self.campagna)
+        return util.traducir_resultado_bbdd(lista_bruta)
+
+    def obtener_aliados(self):
+        lista_bruta = util_bbdd.recuperar_aliados(self.campagna)
+        return util.traducir_resultado_bbdd(lista_bruta)
+
+    def obtener_enemigos(self):
+        lista_bruta = util_bbdd.recuperar_enemigos(self.campagna)
+        return util.traducir_resultado_bbdd(lista_bruta)
+
+    # Metodos graficos
+    def cambiar_pantalla(self, ventana, pantalla):
         pantalla = ventana.pantallas[pantalla]
         pantalla.tkraise()
 
@@ -244,27 +214,34 @@ class Controlador:
     def abrir_menu_ataque(self, formulario_pj, pj):
         FormularioAtacar(formulario_pj, self, pj)
 
-    def ataque(self, atacante, objetivo, arma):
-        atacante.atacar(objetivo,arma)
-
-
     def abrir_menu_objetos(self):
         pass
 
-    def inicializar(self):
-        self.ventana = None
-        self.campagnas = None
-        self.ruta_miscelanea = Path("miscelanea")
-        self.ruta_config = Path("miscelanea/config.json") # En el json se guarda la campaña en uso
-        self.config = None
-        self.nombre_master = ""
-        self.campagna = ""
-        self.personajes = {} # TODOS LOS PERSONAJES
-        self.aliados = {}
-        self.enemigos = {}
-        self.historial = None # Este es el fichero del historial
-        self.cuadro_historial = None  # Esto va a ser util para actualizar desde cualquier sitio
-        self.listbox_personajes = None  # Esto va a ser util para actualizar desde cualquier sitio
-        self.listbox_elem_aliados = None  # Esto va a ser util para actualizar desde cualquier sitio
-        self.listbox_elem_enemigos = None
+    def escribir_en_historial(self, msj):
+        msj = util.crear_mensaje(msj)
+        with self.historial.open("a", encoding="utf-8") as his:
+            his.write(msj)
+        self.cuadro_historial.configure(state=tk.NORMAL)
+        self.cuadro_historial.insert(0.0,msj)
+        self.cuadro_historial.configure(state=tk.DISABLED)
 
+    def actualizar_listas(self):
+        self.actualizar_lista_pers()
+
+    def actualizar_lista_pers(self):
+        self.cargar_dicc_personajes()
+        self.cargar_dicc_aliados()
+        self.cargar_dicc_enemigos()
+        self.listbox_personajes.actualizar(self.personajes)
+        try:
+            self.listbox_elem_aliados.actualizar(self.aliados)
+        except AttributeError:
+            pass
+        try:
+            self.listbox_elem_enemigos.actualizar(self.enemigos)
+        except AttributeError:
+            pass
+
+    # Metodos intermediarios entre objetos
+    def ataque(self, atacante, objetivo, arma):
+        atacante.atacar(objetivo,arma)

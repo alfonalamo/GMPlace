@@ -18,11 +18,11 @@ class FormularioModPJ(Formulario):
         self.descripcion = tk.StringVar()
         self.pv = tk.IntVar()
         self.ca = tk.IntVar()
-        self.cargawidgets()
+        self.cargarwidgets()
         self.resizable(False, False)
         self.actualizacion_periodica()
 
-    def cargawidgets(self):
+    def cargarwidgets(self):
         imagen = tk.PhotoImage(file="constantes/silueta.png")
         label = tk.Label(self, image=imagen)
         label.pack(side=tk.LEFT)

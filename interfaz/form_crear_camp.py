@@ -10,11 +10,14 @@ class FormularioCrearCamp(Formulario):
     def __init__(self, contenedor, controlador):
         super().__init__(contenedor,  controlador)
         self.controlador = controlador
-        # self.protocol("WM_DELETE_WINDOW", self.recoger_datos)
         self.config(background=estilos.Color.FONDO_NAV)
         self.nombre_master = tk.StringVar()
         self.nombre_campagna = tk.StringVar()
-        items.LabelEstandar(
+
+        self.cargarwidgets()
+
+    def cargarwidgets(self):
+        items.MessageEstandar(
             self,
             textos.tutorial
         ).pack(

@@ -12,7 +12,7 @@ class Tutorial(tk.Tk):
         self.config(background=estilos.Color.FONDO_NAV)
         self.nombre_master = tk.StringVar()
         self.nombre_campagna = tk.StringVar()
-        items.LabelEstandar(
+        items.MessageEstandar(
             self,
             textos.tutorial
         ).pack(

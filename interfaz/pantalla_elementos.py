@@ -12,13 +12,13 @@ class Elementos(Pantalla):
         categorias =  ("Personaje", "Enemigo", "Objeto")
         self.pantalla_activa = "Personaje" # La pantalla que se verá por defecto al inicio
         self.pantallas = {}
-        self.contenedor_principal = tk.Frame(self)
+        self.contenedor_principal = items.ContenedorPrincipal(self)
 
         for categoria in categorias:
             pantalla = Subpantalla(self.contenedor_principal, self.controlador, categoria)
             self.pantallas[str(pantalla.nombre)] = pantalla
 
-        controlador.muestra_pantalla(self, self.pantalla_activa)
+        self.controlador.cambiar_pantalla(self, self.pantalla_activa)
 
         self.barra_navegacion = NavegadorLateral(self, self.controlador, self.pantallas.values())
         self.carga_widgets()

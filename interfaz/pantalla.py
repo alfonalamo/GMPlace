@@ -1,6 +1,6 @@
 import tkinter as tk
 from abc import abstractmethod
-from constantes import estilos, config
+from constantes import estilos
 from interfaz.navegador import NavegadorLateral
 
 

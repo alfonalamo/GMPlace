@@ -28,7 +28,7 @@ class FormularioCambiarCamp(Formulario):
             pady=10,
             padx=10
         )
-        self.lista_campagna.llenar_lista(self.controlador.recuperar_info_campas())
+        self.lista_campagna.actualizar(self.controlador.recuperar_info_campas())
 
     def cambiar_campagna(self):
         if self.lista_campagna.curselection():

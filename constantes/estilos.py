@@ -1,5 +1,8 @@
 import tkinter as tk
-class Color():
+from symtable import Class
+
+
+class Color:
     FONDO = "#00a8e8"
     FONDO_NAV = "#007ea7"
     COMPONENTE = "#003459"
@@ -9,30 +12,30 @@ class Color():
     RESALTADO = "#00171f"
     ALIADO="lightgreen"
 
-COLOR_FONDO = "grey"
-FONT = ("Arial", 14)
-FONT_LIGERA = ("Arial", 12)
-# COMPONENT = "red"
+class Fuente:
+    BASICA = ("Arial", 14)
+    LIGERA = ("Arial", 12)
+
 ESTILO_PREDETERMINADO  = {
-    "font" : FONT,
+    "font" : Fuente.BASICA,
     "bg" : Color.COMPONENTE,
     "fg" : Color.TEXTO_BLANCO
 }
 
 ESTILO_PREDETERMINADO_LIGERO  = {
-    "font" : FONT_LIGERA,
+    "font" : Fuente.LIGERA,
     "background" : Color.COMPONENTE_CLARO,
     "foreground" : Color.TEXTO_BLANCO
 }
 
 ESTILO_PREDETERMINADO_BOTON  = {
-    "font" : FONT,
+    "font" : Fuente.BASICA,
     "bg" : Color.COMPONENTE,
     "fg" : Color.TEXTO_BLANCO,
     "relief" : tk.FLAT,
     "activebackground" : Color.FONDO,
     "activeforeground" : Color.TEXTO,
-    "disabledforeground" : COLOR_FONDO,
+    "disabledforeground" : Color.FONDO,
     "justify" : tk.LEFT
 }
 

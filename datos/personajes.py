@@ -3,8 +3,7 @@ from logica import util
 
 class Personaje:
     def __init__(self, nombre, tipo, jugador, descripcion, caracteristicas, pv, campagna, nivel=1):
-        self.nombre = nombre # Usar solo si da problemas los nombres con espacio
-        self.id = util.tratar_nombre(nombre) # Usar solo si da problemas los nombres con espacio
+        self.nombre = nombre.strip(" ") # Usar solo si da problemas los nombres con espacio
         self.tipo = tipo
         self.jugador = jugador
         self.descripcion = descripcion
@@ -16,6 +15,11 @@ class Personaje:
         self.pv_max = util.calcular_pv(caracteristicas["CON"])
         self.pv_actual = pv
         self.campagna = campagna
+        self.id = self.crear_id() # Usar solo si da problemas los nombres con espacio
+
+    def crear_id(self):
+        id = f"{self.nombre.replace(" ", "-")}_{self.campagna}"
+        return id
 
     def atacar(self, objetivo, arma=None):
         modificador = self.caracteristicas["FUE"]
@@ -27,6 +31,9 @@ class Personaje:
         util.mostrar_mensaje(mensaje)
         dagno = self.calcular_dagno(arma) + modificador
         objetivo.recibir_ataque(ataque,dagno)
+
+    def calcular_dagno(self, arma=None):
+        return 0
 
     def recibir_ataque(self, ataque, dagno):
         if ataque > self.defensa:
@@ -55,37 +62,19 @@ class Personaje:
             mensaje = f"{self.nombre}  ha recuperado {puntos_curacion} tiene {self.pv_actual} puntos de vida"
         util.mostrar_mensaje(mensaje)
 
-    # def modificar_vida(self,mod):
-    #     self.vida += mod
-    #     return
-
     def subir_nivel(self):
         self.nivel += 1
         mensaje = f" {self.nombre} ha subido a nivel {self.nivel}"
         util.mostrar_mensaje(mensaje)
-
-
-
-    def calcular_dagno(self, arma=None):
-        return 0
 
     def calcular_modificadores(self, caracteristicas):
         for clave, valor in caracteristicas.items():
             self.modificadores[clave] = util.calcular_modificador(valor)
 
     def to_string(self):
-        return (f"{self.nombre}, es un {self.tipo} de {self.jugador}, "
+        string = (f"{self.nombre}, es un {self.tipo} de {self.jugador}, "
                 f"Caracteristicas: {self.caracteristicas}, "
-                f"Modificadores: {self.modificadores}"
-                f"PV: {self.pv_actual}, CA: {self.defensa}"
-                f"Descripción :  {self.descripcion}")
-
-# class PersonajeJugable(Personaje):
-#     def __init__(self, nombre, clase, inventario, caracteristicas,jugador):
-#         super().__init__(nombre, clase, inventario, caracteristicas)
-#         self.jugador = jugador
-#
-# class PersonajeNoJugador(Personaje):
-#     def __init__(self, nombre, clase, inventario, caracteristicas):
-#         super().__init__(nombre, clase, inventario, caracteristicas)
-#
+                f"Modificadores: {self.modificadores} "
+                f"PV: {self.pv_actual}, CA: {self.defensa} "
+                f"Descripción :  {self.descripcion}.")
+        return string

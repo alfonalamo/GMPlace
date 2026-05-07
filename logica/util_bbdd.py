@@ -48,25 +48,6 @@ def insertar_personaje(personaje):
         conn.close()
         return False
 
-def modificar_personaje(id_antiguo):
-    conn = conectar_bbdd()
-    cursor = conn.cursor()
-    instruccion = (f"UPDATE personajes WHERE id={id_antiguo}")
-    instruccion = (f"INSERT INTO personajes VALUES('{personaje.id}','{personaje.nombre}', '{personaje.descripcion}', "
-                   f"'{personaje.tipo}', '{personaje.jugador}', {personaje.nivel}, {personaje.pv_actual}, "
-                   f"{personaje.caracteristicas["FUE"]}, {personaje.caracteristicas["CON"]}, "
-                   f"{personaje.caracteristicas["SAB"]}, {personaje.caracteristicas["INT"]}, "
-                   f"{personaje.caracteristicas["DES"]}, {personaje.caracteristicas["CAR"]}," 
-                   f"'{personaje.campagna}')")
-    try:
-        cursor.execute(
-            instruccion
-        )
-        conn.commit()
-        return True
-    except sql.IntegrityError:
-        conn.close()
-        return False
 
 def borrar_personaje(id_antiguo):
     conn = conectar_bbdd()
@@ -82,7 +63,7 @@ def borrar_personaje(id_antiguo):
         conn.close()
         return False
 
-def leer_personajes(campagna):
+def recuperar_personajes(campagna):
     conn = conectar_bbdd()
     cursor = conn.cursor()
     print("leer_personajes: ", campagna)
@@ -97,7 +78,7 @@ def leer_personajes(campagna):
     conn.close()
     return resultado
 
-def leer_aliados(campagna):
+def recuperar_aliados(campagna):
     conn = conectar_bbdd()
     cursor = conn.cursor()
     print("leer_personajes: ", campagna)
@@ -112,7 +93,7 @@ def leer_aliados(campagna):
     conn.close()
     return resultado
 
-def leer_enemigos(campagna):
+def recuperar_enemigos(campagna):
     conn = conectar_bbdd()
     cursor = conn.cursor()
     print("leer_personajes: ", campagna)

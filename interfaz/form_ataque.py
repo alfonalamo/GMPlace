@@ -13,9 +13,9 @@ class FormularioAtacar(Formulario):
         self.arma = tk.StringVar()
         self.objetivo = tk.StringVar()
         self.israndom = tk.BooleanVar()
-        self.cargawidgets()
+        self.cargarwidgets()
 
-    def cargawidgets(self):
+    def cargarwidgets(self):
         items.LabelEstandar(self, "Atacar a: ").pack(side= tk.LEFT, padx=5)
         ttk.Combobox(self, values=self.personajes, state="readonly", textvariable=self.objetivo
                      ).pack(side= tk.LEFT, padx=5)

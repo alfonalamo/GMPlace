@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from constantes import estilos, config
+from constantes import estilos
 from interfaz import items
 from interfaz.form_cambiar_camp import FormularioCambiarCamp
 from interfaz.form_crear_camp import FormularioCrearCamp
@@ -32,8 +32,8 @@ class Inicio(Pantalla):
         items.BotonEstandar(frame_master,"Crear nueva campaña", self.abrir_formulario_crear_campagna
                             ).pack(side=tk.TOP, fill=tk.NONE, expand=True, pady=5)
 
-        frame_inferior = tk.Frame(self)
-        frame_inferior.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+        # frame_inferior = tk.Frame(self)
+        # frame_inferior.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
     def abrir_formulario_cambio(self):
         FormularioCambiarCamp(self, self.controlador)
