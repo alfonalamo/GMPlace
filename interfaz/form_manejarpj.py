@@ -86,9 +86,9 @@ class FormularioVerPJ(Formulario):
         tk.Label(frame_vida,textvariable=self.pv_actual).pack(side=tk.TOP)
 
         frame_botones = tk.Frame(self)
-        frame_botones.pack(side=tk.TOP ,padx=10 ,fill=tk.BOTH ,expand=True)
+        frame_botones.pack(side=tk.TOP ,padx=10 ,pady=10 ,fill=tk.BOTH ,expand=True)
 
-        items.BotonEstandar(frame_botones,"ATACAR",self.controlador.abrir_menu_ataque()
+        items.BotonEstandar(frame_botones,"ATACAR",lambda: self.controlador.abrir_menu_ataque(self, self.pj)
                             ).pack(side=tk.LEFT ,padx=10 ,fill=tk.X ,expand=True)
         items.BotonEstandar(frame_botones,"OBJETOS",self.controlador.abrir_menu_objetos()
                             ).pack(side=tk.LEFT ,padx=10 ,fill=tk.X ,expand=True)

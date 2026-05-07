@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from constantes import estilos
+from interfaz.form_ataque import FormularioAtacar
 from interfaz.form_mod_pj import FormularioModPJ
 from interfaz.ventana_tutorial import Tutorial
 from logica import util, util_bbdd
@@ -13,8 +14,6 @@ from interfaz.form_manejarpj import FormularioVerPJ
 
 class Controlador:
     def __init__(self):
-
-
         self.ventana = None
         self.campagnas = None
         self.ruta_miscelanea = Path("miscelanea")
@@ -34,6 +33,7 @@ class Controlador:
 
 
     def arranque(self):
+        self.inicializar()
         self.arranque_bbdd() # crear las bases de datos si no existen
         self.ruta_miscelanea = Path("miscelanea")
         self.ruta_config = Path("miscelanea/config.json")
@@ -204,13 +204,14 @@ class Controlador:
         self.borrar_personaje(id_antiguo)
         personaje = Personaje(nombre, tipo, jugador, descripcion, caracteristicas, pv, self.campagna)
         if util_bbdd.insertar_personaje(personaje):
-            self.escribir_en_historial(f" Ha nacido {personaje.to_string()}")
+            self.escribir_en_historial(f" Se ha modificado la ficha de: {nombre}")
             self.actualizar_listas()
             return True
         else: return False
 
     def borrar_personaje(self, id_antiguo):
         if util_bbdd.borrar_personaje(id_antiguo):
+            self.escribir_en_historial(f" Se ha borrado la ficha de: {id_antiguo}")
             self.actualizar_listas()
             return True
         else: return False
@@ -222,7 +223,10 @@ class Controlador:
     def abrir_ventana_pj(self, event):
         # listbox = event.widget
         personaje = self.listbox_personajes.get_seleccion()
-        FormularioVerPJ(self.ventana, self, self.personajes[personaje])
+        try:
+            FormularioVerPJ(self.ventana, self, self.personajes[personaje])
+        except KeyError:
+            pass
 
     def abrir_ventana_mod_pj(self, event):
         # listbox = event.widget
@@ -237,9 +241,30 @@ class Controlador:
         except KeyError:
             pass
 
-    def abrir_menu_ataque(self):
-        pass
+    def abrir_menu_ataque(self, formulario_pj, pj):
+        FormularioAtacar(formulario_pj, self, pj)
+
+    def ataque(self, atacante, objetivo, arma):
+        atacante.atacar(objetivo,arma)
+
 
     def abrir_menu_objetos(self):
         pass
+
+    def inicializar(self):
+        self.ventana = None
+        self.campagnas = None
+        self.ruta_miscelanea = Path("miscelanea")
+        self.ruta_config = Path("miscelanea/config.json") # En el json se guarda la campaña en uso
+        self.config = None
+        self.nombre_master = ""
+        self.campagna = ""
+        self.personajes = {} # TODOS LOS PERSONAJES
+        self.aliados = {}
+        self.enemigos = {}
+        self.historial = None # Este es el fichero del historial
+        self.cuadro_historial = None  # Esto va a ser util para actualizar desde cualquier sitio
+        self.listbox_personajes = None  # Esto va a ser util para actualizar desde cualquier sitio
+        self.listbox_elem_aliados = None  # Esto va a ser util para actualizar desde cualquier sitio
+        self.listbox_elem_enemigos = None
 

@@ -11,6 +11,7 @@ class Color():
 
 COLOR_FONDO = "grey"
 FONT = ("Arial", 14)
+FONT_LIGERA = ("Arial", 12)
 # COMPONENT = "red"
 ESTILO_PREDETERMINADO  = {
     "font" : FONT,
@@ -18,9 +19,15 @@ ESTILO_PREDETERMINADO  = {
     "fg" : Color.TEXTO_BLANCO
 }
 
+ESTILO_PREDETERMINADO_LIGERO  = {
+    "font" : FONT_LIGERA,
+    "background" : Color.COMPONENTE_CLARO,
+    "foreground" : Color.TEXTO_BLANCO
+}
+
 ESTILO_PREDETERMINADO_BOTON  = {
     "font" : FONT,
-    "bg" : Color.COMPONENTE_CLARO,
+    "bg" : Color.COMPONENTE,
     "fg" : Color.TEXTO_BLANCO,
     "relief" : tk.FLAT,
     "activebackground" : Color.FONDO,

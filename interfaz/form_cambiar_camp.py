@@ -15,7 +15,9 @@ class FormularioCambiarCamp(Formulario):
         self.lista_campagna.pack(
             side=tk.TOP,
             fill=tk.BOTH,
-            expand=False
+            expand=False,
+            pady=5,
+            padx=5
         )
         items.BotonEstandar(
             self,
@@ -23,12 +25,13 @@ class FormularioCambiarCamp(Formulario):
             self.cambiar_campagna
         ).pack(
             side=tk.TOP,
-            pady=10
+            pady=10,
+            padx=10
         )
         self.lista_campagna.llenar_lista(self.controlador.recuperar_info_campas())
 
     def cambiar_campagna(self):
         if self.lista_campagna.curselection():
             campagna, master = self.lista_campagna.get_seleccion()
-            self.destroy()
             self.controlador.rearranque(campagna,master)
+            self.destroy()

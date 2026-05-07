@@ -17,6 +17,17 @@ class Personaje:
         self.pv_actual = pv
         self.campagna = campagna
 
+    def atacar(self, objetivo, arma=None):
+        modificador = self.caracteristicas["FUE"]
+        if arma:
+            modificador += arma.modificador
+        tirada = util.tirar_dado(20)
+        ataque = tirada + modificador
+        mensaje = f"{self.nombre} ataca a {objetivo.nombre} con {tirada} + {modificador} = {ataque}"
+        util.mostrar_mensaje(mensaje)
+        dagno = self.calcular_dagno(arma) + modificador
+        objetivo.recibir_ataque(ataque,dagno)
+
     def recibir_ataque(self, ataque, dagno):
         if ataque > self.defensa:
             mensaje = f"El ataque entra, {self.nombre} recibe {dagno} puntos de daño"
@@ -53,16 +64,7 @@ class Personaje:
         mensaje = f" {self.nombre} ha subido a nivel {self.nivel}"
         util.mostrar_mensaje(mensaje)
 
-    def atacar(self, objetivo, arma=None):
-        modificador = self.caracteristicas["FUE"]
-        if arma:
-            modificador += arma.modificador
-        tirada = util.tirar_dado(20)
-        ataque = tirada + modificador
-        mensaje = f"{self.nombre} ataca a {objetivo.nombre} con {tirada} + {modificador} = {ataque}"
-        util.mostrar_mensaje(mensaje)
-        dagno = self.calcular_dagno(arma) + modificador
-        objetivo.recibir_ataque(ataque,dagno)
+
 
     def calcular_dagno(self, arma=None):
         return 0

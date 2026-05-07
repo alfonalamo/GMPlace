@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import  ttk
 from abc import ABC
 
 from constantes import estilos
@@ -32,10 +33,15 @@ class BotonEstandar(tk.Button):
         super().__init__(contenedor)
         self.config(text=texto, command=comando, **estilos.ESTILO_PREDETERMINADO_BOTON)
 
+class MessageEstandar(tk.Message):
+    def __init__(self, contenedor, texto):
+        super().__init__(contenedor)
+        self.config(text=texto, justify=tk.CENTER,  **estilos.ESTILO_PREDETERMINADO_LIGERO)
+
 class LabelEstandar(tk.Label):
     def __init__(self, contenedor, texto):
         super().__init__(contenedor)
-        self.config(text=texto, **estilos.ESTILO_PREDETERMINADO )
+        self.config(text=texto, justify=tk.CENTER,  **estilos.ESTILO_PREDETERMINADO_LIGERO)
 
 class ListBoxEstandar(tk.Listbox):
     def __init__(self, contenedor):
@@ -65,7 +71,10 @@ class ListBoxPersonajes(ListBoxEstandar)   :
         super().__init__(contenedor)
         
     def actualizar(self, dic_pers):
-        self.delete(0,tk.END)
+        try:
+            self.delete(0,tk.END)
+        except tk.TclError:
+            pass
         try:
             for nombre_pj, objeto_pj in dic_pers.items():
                 self.insert(tk.END, f"{nombre_pj} - {objeto_pj.jugador}")

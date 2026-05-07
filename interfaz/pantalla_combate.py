@@ -62,7 +62,9 @@ class Combate(Pantalla):
             )
 
         self.texto_resumen = tk.Text(
-            frame_notas
+            frame_notas,
+            **estilos.ESTILO_PREDETERMINADO_LIGERO,
+            spacing1=4
             # yscrollcommand=barra_scroll_comentario.set
         )
         self.texto_resumen.pack(

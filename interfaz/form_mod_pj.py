@@ -144,7 +144,8 @@ class FormularioModPJ(Formulario):
             mb.showinfo(f"Has salvado a {self.pj.nombre}")
             return
         else:
-            mb.showerror("ERROR",f"{self.nombre_pj.get()} ya existe",)
+            self.controlador.borrar_personaje(self.pj.id)
+            mb.showwarning("INFO",f"{self.nombre_pj.get()} ha sido borrado ")
 
     def comprobar_campos(self):
         if self.nombre_pj.get().strip(" ") == "":
