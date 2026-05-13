@@ -9,9 +9,10 @@ class FormularioCambiarCamp(Formulario):
         self.config(background=estilos.Color.FONDO_NAV)
         self.nombre_master = tk.StringVar()
         self.nombre_campagna = tk.StringVar()
-        self.lista_campagna = items.ListBoxCampagnas(
-            self,
-        )
+        self.lista_campagna = items.ListBoxCampagnas(self)
+        self.cargarwidgets()
+
+    def cargarwidgets(self):
         self.lista_campagna.pack(
             side=tk.TOP,
             fill=tk.BOTH,

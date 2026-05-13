@@ -1,5 +1,7 @@
 from datetime import datetime
 from random import randint
+
+from datos.objetos import Objeto
 from datos.personajes import Personaje
 
 def traducir_resultado_bbdd(lista_bruta_personajes):
@@ -17,6 +19,20 @@ def traducir_resultado_bbdd(lista_bruta_personajes):
         personaje = Personaje(nombre, tipo, jugador, descripcion, caracteristicas, pv, campagna, nivel)
         lista_objs_pers.append(personaje)
     return lista_objs_pers
+
+def traducir_objeto_bbdd(lista_bruta):
+    lista_objs = list()
+    for tupla in lista_bruta:
+        campagna = tupla[0]
+        nombre = tupla[1]
+        personaje = tupla[2]
+        descripcion = tupla[3]
+        tipo = tupla[4]
+        precio = tupla[5]
+        modificador = tupla[6]
+        objeto = Objeto(campagna, nombre, personaje, descripcion, tipo, precio, modificador)
+        lista_objs.append(objeto)
+    return lista_objs
 
 def mostrar_mensaje(mensaje):
     print(mensaje)

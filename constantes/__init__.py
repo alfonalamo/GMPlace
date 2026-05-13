@@ -6,3 +6,8 @@ caracteristicas = {
     "DES" : "destreza",
     "CAR" : "carisma"
 }
+tipos_objetos = [
+    "arma",
+    "simple",
+    "clave"
+]

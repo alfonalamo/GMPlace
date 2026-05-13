@@ -22,28 +22,28 @@ class Personaje:
         return id
 
     def atacar(self, objetivo, arma=None):
-        modificador = self.caracteristicas["FUE"]
+        modificador = self.modificadores["FUE"]
         if arma:
             modificador += arma.modificador
         tirada = util.tirar_dado(20)
         ataque = tirada + modificador
-        mensaje = f"{self.nombre} ataca a {objetivo.nombre} con {tirada} + {modificador} = {ataque}"
-        util.mostrar_mensaje(mensaje)
+        mensaje = f"{self.nombre} ataca a {objetivo.nombre}, ha sacado un {tirada} + {modificador} = {ataque}"
         dagno = self.calcular_dagno(arma) + modificador
-        objetivo.recibir_ataque(ataque,dagno)
+        return ataque, dagno, mensaje
+
+
 
     def calcular_dagno(self, arma=None):
         return 0
 
     def recibir_ataque(self, ataque, dagno):
         if ataque > self.defensa:
-            mensaje = f"El ataque entra, {self.nombre} recibe {dagno} puntos de daño"
-            util.mostrar_mensaje(mensaje)
+            mensaje = f" El ataque es mayor que la defensa: {self.defensa}, {self.nombre} recibe {dagno} puntos de daño"
             self.recibir_dagno(dagno)
+            return  mensaje
         else:
-            mensaje = f"{self.nombre} para el ataque, no recibe daño"
-            util.mostrar_mensaje(mensaje)
-
+            mensaje = f"{self.nombre} para el ataque con defensa de: {self.defensa}, no recibe daño"
+            return mensaje
     def recibir_dagno(self, dagno):
         self.pv_actual -= dagno
         if self.pv_actual <= 0:

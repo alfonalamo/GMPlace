@@ -90,10 +90,14 @@ class FormularioVerPJ(Formulario):
 
         items.BotonEstandar(frame_botones,"ATACAR",lambda: self.controlador.abrir_menu_ataque(self, self.pj)
                             ).pack(side=tk.LEFT ,padx=10 ,fill=tk.X ,expand=True)
-        items.BotonEstandar(frame_botones,"OBJETOS",self.controlador.abrir_menu_objetos()
+        items.BotonEstandar(frame_botones,"OBJETOS",lambda: self.controlador.abrir_menu_objetos(self, self.pj)
                             ).pack(side=tk.LEFT ,padx=10 ,fill=tk.X ,expand=True)
 
 
     def actualizacion_periodica(self):
+        self.pj = self.controlador.personajes[self.pj.id]
         self.pv_actual.set(self.pj.pv_actual)
+        print(self.pj.pv_actual)
         self.after(1000,self.actualizacion_periodica)
+
+

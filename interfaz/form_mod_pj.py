@@ -146,6 +146,7 @@ class FormularioModPJ(Formulario):
         else:
             self.controlador.borrar_personaje(self.pj.id)
             mb.showwarning("INFO",f"{self.nombre_pj.get()} ha sido borrado ")
+            self.destroy()
 
     def comprobar_campos(self):
         if self.nombre_pj.get().strip(" ") == "":

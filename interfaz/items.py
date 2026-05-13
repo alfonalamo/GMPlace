@@ -56,6 +56,7 @@ class ListBoxEstandar(tk.Listbox):
     @abstractmethod
     def actualizar(self, dic):
         pass
+
     @abstractmethod
     def get_seleccion(self):
         if self.curselection():
@@ -68,6 +69,7 @@ class ListBoxPersonajes(ListBoxEstandar)   :
         self.lista_pers = dict()
         
     def actualizar(self, dic_pers):
+        self.lista_pers = {}
         try:
             self.delete(0,tk.END)
         except tk.TclError:
@@ -91,6 +93,58 @@ class ListBoxPersonajes(ListBoxEstandar)   :
             # return self.get(indice).split("-")[0].strip(" ")
             alias = self.get(indice)
             return self.lista_pers[alias]
+
+
+class ListBoxObjetos(ListBoxEstandar):
+    def __init__(self, contenedor):
+        super().__init__(contenedor)
+        self.lista_objetos = dict()
+
+    def actualizar(self, dic_obj):
+        self.lista_objetos = {}
+        try:
+            self.delete(0, tk.END)
+        except tk.TclError:
+            pass
+        try:
+            for obj in dic_obj.values():
+                alias = f"{obj.nombre}"
+                self.lista_objetos[alias] = obj
+                self.insert(tk.END, alias)
+                if obj.tipo == "arma":
+                    self.itemconfig(tk.END, bg=estilos.Color.ALIADO)
+                else:
+                    self.itemconfig(tk.END, bg="red")
+        except AttributeError:
+            print("error", dic_obj)
+            pass
+
+    def actualizar_con_lista(self, lista_obj):
+        self.lista_objetos = {}
+        try:
+            self.delete(0, tk.END)
+        except tk.TclError:
+            pass
+        try:
+            for obj in lista_obj:
+                alias = f"{obj.nombre}"
+                self.lista_objetos[alias] = obj
+                self.insert(tk.END, alias)
+                if obj.tipo == "arma":
+                    self.itemconfig(tk.END, bg=estilos.Color.ALIADO)
+                else:
+                    self.itemconfig(tk.END, bg="red")
+        except AttributeError:
+            print("error", lista_obj)
+            pass
+
+    def get_seleccion(self):
+        if self.curselection():
+            print(self.lista_objetos)
+            indice = self.curselection()[0]
+            # return self.get(indice).split("-")[0].strip(" ")
+            alias = self.get(indice)
+            return self.lista_objetos[alias]
 
 class ListBoxCampagnas(ListBoxEstandar)   :
     def __init__(self, contenedor):

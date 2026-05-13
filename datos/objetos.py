@@ -1,19 +1,22 @@
 class Objeto:
-    def __init__(self, nombre, descripcion, precio):
+    def __init__(self, campagna, nombre, personaje, descripcion, tipo, precio, modificador):
+        self.campagna = campagna
         self.nombre = nombre
+        self.personaje = personaje
         self.descripcion = descripcion
+        self.tipo = tipo
         self.precio = precio
-        pass
+        self.modificador = modificador
 
 class ObjetoConsumible(Objeto):
-    def __init__(self, nombre, descripcion, precio):
-        super().__init__(nombre, descripcion, precio)
+    def __init__(self, nombre, descripcion, precio, modificador):
+        super().__init__(nombre, descripcion, precio, modificador)
         pass
 
 
 class ObjetoEquipable(Objeto):
-    def __init__(self, nombre, descripcion, precio):
-        super().__init__(nombre, descripcion, precio)
+    def __init__(self, nombre, descripcion, precio, modificador):
+        super().__init__(nombre, descripcion, precio, modificador)
         self.equipado = False
         pass
 

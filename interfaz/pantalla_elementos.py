@@ -1,6 +1,7 @@
 import tkinter as tk
 from constantes import estilos
 from interfaz import items
+from interfaz.form_crear_objeto import FormularioCrearObjeto
 from interfaz.form_crearpj import FormularioCrearPJ, FormularioCrearEnemigo
 from interfaz.pantalla import Pantalla
 from interfaz.navegador import NavegadorLateral
@@ -72,6 +73,8 @@ class Subpantalla(Pantalla):
             FormularioCrearPJ(self, self.controlador)
         elif self.nombre == "Enemigo":
             FormularioCrearEnemigo(self, self.controlador)
+        elif self.nombre == "Objeto":
+            FormularioCrearObjeto(self, self.controlador)
         else:
             toplevel = tk.Toplevel(
                 self
@@ -96,3 +99,12 @@ class Subpantalla(Pantalla):
                 expand=True
             )
             self.controlador.listbox_elem_enemigos = lista_elem_enemigos
+
+        elif self.nombre == "Objeto":
+            lista_elem_objetos = items.ListBoxObjetos(contenedor)
+            lista_elem_objetos.pack(
+                side=tk.LEFT,
+                fill=tk.BOTH,
+                expand=True
+            )
+            self.controlador.listbox_elem_objetos = lista_elem_objetos

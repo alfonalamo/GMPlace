@@ -66,14 +66,11 @@ def borrar_personaje(id_antiguo):
 def recuperar_personajes(campagna):
     conn = conectar_bbdd()
     cursor = conn.cursor()
-    print("leer_personajes: ", campagna)
     instruccion = f"SELECT * FROM personajes WHERE campagna = '{campagna}'"
-    print("instruccion ",instruccion)
     cursor.execute(
         instruccion
     )
     resultado = cursor.fetchall()
-    print("resultado", resultado)
     conn.commit()
     conn.close()
     return resultado
@@ -81,14 +78,11 @@ def recuperar_personajes(campagna):
 def recuperar_aliados(campagna):
     conn = conectar_bbdd()
     cursor = conn.cursor()
-    print("leer_personajes: ", campagna)
     instruccion = f"SELECT * FROM personajes WHERE campagna = '{campagna}' AND tipo = 'pj'"
-    print("instruccion ",instruccion)
     cursor.execute(
         instruccion
     )
     resultado = cursor.fetchall()
-    print("resultado", resultado)
     conn.commit()
     conn.close()
     return resultado
@@ -96,14 +90,11 @@ def recuperar_aliados(campagna):
 def recuperar_enemigos(campagna):
     conn = conectar_bbdd()
     cursor = conn.cursor()
-    print("leer_personajes: ", campagna)
     instruccion = f"SELECT * FROM personajes WHERE campagna = '{campagna}' AND tipo = 'enemigo'"
-    print("instruccion ",instruccion)
     cursor.execute(
         instruccion
     )
     resultado = cursor.fetchall()
-    print("resultado", resultado)
     conn.commit()
     conn.close()
     return resultado
@@ -148,3 +139,61 @@ def insertar_campa(datos):
         conn.close()
         return False
 
+def crear_tabla_objetos():
+    conn = conectar_bbdd()
+    try:
+        conn.execute(
+            """CREATE TABLE objetos (
+                campagna text,
+                nombre text,
+                personaje text,
+                descripcion text,
+                tipo text,
+                precio double,
+                modificador integer
+            )"""
+        )
+        conn.commit()
+    except sql.OperationalError:
+        print("Existe tabla de objetos")
+    conn.close()
+
+def insertar_objeto(objeto):
+    conn = conectar_bbdd()
+    cursor = conn.cursor()
+    instruccion = (f"INSERT INTO objetos VALUES('{objeto.campagna}','{objeto.nombre}','{objeto.personaje}',"
+                   f"'{objeto.descripcion}', '{objeto.tipo}', {objeto.precio}, {objeto.modificador})")
+    try:
+        cursor.execute(
+            instruccion
+        )
+        conn.commit()
+        return True
+    except sql.IntegrityError:
+        conn.close()
+        return False
+
+def recuperar_objetos(campagna, id_pj = "comun"):
+    conn = conectar_bbdd()
+    cursor = conn.cursor()
+    instruccion = f"SELECT * FROM objetos WHERE campagna = '{campagna}' AND personaje='{id_pj}' "
+    cursor.execute(
+        instruccion
+    )
+    resultado = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return resultado
+
+def recuperar_armas(personaje):
+    conn = conectar_bbdd()
+    cursor = conn.cursor()
+    instruccion = (f"SELECT nombre FROM objetos WHERE campagna = '{personaje.campagna}' AND tipo = 'arma' "
+                   f"AND personaje = '{personaje.id}' ")
+    cursor.execute(
+        instruccion
+    )
+    resultado = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return resultado

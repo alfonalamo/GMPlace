@@ -6,7 +6,6 @@ from interfaz.form_cambiar_camp import FormularioCambiarCamp
 from interfaz.form_crear_camp import FormularioCrearCamp
 from interfaz.pantalla import Pantalla
 
-
 class Inicio(Pantalla):
     def __init__(self, contenedor, controlador):
         super().__init__(contenedor, controlador, "Inicio")
