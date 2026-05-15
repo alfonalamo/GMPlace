@@ -97,7 +97,6 @@ class FormularioVerPJ(Formulario):
     def actualizacion_periodica(self):
         self.pj = self.controlador.personajes[self.pj.id]
         self.pv_actual.set(self.pj.pv_actual)
-        print(self.pj.pv_actual)
         self.after(1000,self.actualizacion_periodica)
 
 

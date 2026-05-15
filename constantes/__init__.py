@@ -9,5 +9,6 @@ caracteristicas = {
 tipos_objetos = [
     "arma",
     "simple",
-    "clave"
+    "clave",
+    "pocion"
 ]

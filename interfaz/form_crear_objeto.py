@@ -21,8 +21,6 @@ class FormularioCrearObjeto(Formulario):
         frame_texto = tk.Frame(self)
         frame_texto.pack(side=tk.LEFT, padx=10, fill=tk.BOTH, expand=True)
 
-
-
         frame_nombre = tk.Frame(frame_texto)
         frame_nombre.pack(side=tk.TOP, fill=tk.X)
         tk.Label(frame_nombre, text="Nombre").pack(side=tk.LEFT)
@@ -45,7 +43,7 @@ class FormularioCrearObjeto(Formulario):
         tk.Spinbox(
             frame_modificador,
             from_=-10,
-            to=10,
+            to=1000,
             increment=1,
             width=1,
             textvariable=self.modificador
@@ -62,8 +60,8 @@ class FormularioCrearObjeto(Formulario):
     def crear_obj(self):
         if not self.comprobar_campos():
             return
-        if self.controlador.crear_obj(self.nombre.get(),self.descripcion.get(), self.tipo.get(),
-                                      self.precio.get(), self.modificador.get()):
+        if self.controlador.crear_obj(self.nombre.get(), self.descripcion.get(), self.tipo.get(),
+                                          self.precio.get(), self.modificador.get()):
             mb.showinfo("Objeto creado",f"{self.nombre.get()} se ha creado correctamente")
             self.destroy()
 

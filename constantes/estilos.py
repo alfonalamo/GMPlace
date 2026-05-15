@@ -11,6 +11,11 @@ class Color:
     TEXTO_BLANCO = "#ffffff"
     RESALTADO = "#00171f"
     ALIADO="lightgreen"
+    ARMA="red"
+    ENEMIGO="firebrick3"
+    POCION = "lightblue"
+    OBJETO_CLAVE = "gold"
+    OBJETO_SIMPLE = "grey"
 
 class Fuente:
     BASICA = ("Arial", 14)

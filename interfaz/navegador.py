@@ -3,7 +3,6 @@ from abc import abstractmethod, ABC
 from constantes import estilos
 from interfaz.items import BotonNavegador
 
-
 class Navegador(tk.Frame):
     def __init__(self, contenedor, controlador, pantallas):
         super().__init__(contenedor)

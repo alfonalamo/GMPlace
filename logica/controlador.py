@@ -3,6 +3,7 @@ from pathlib import Path
 from constantes import estilos
 from datos.objetos import Objeto
 from interfaz.form_ataque import FormularioAtacar
+from interfaz.form_mod_obj import FormularioModObj
 from interfaz.form_mod_pj import FormularioModPJ
 from interfaz.form_objetos import FormularioObjetos
 from interfaz.ventana_tutorial import Tutorial
@@ -55,6 +56,7 @@ class Controlador:
         self.listbox_personajes.bind("<<ListboxSelect>>", self.abrir_ventana_pj)
         self.listbox_elem_aliados.bind("<<ListboxSelect>>", self.abrir_ventana_mod_pj)
         self.listbox_elem_enemigos.bind("<<ListboxSelect>>", self.abrir_ventana_mod_pj)
+        self.listbox_elem_objetos.bind("<<ListboxSelect>>", self.abrir_ventana_mod_obj)
 
         self.ventana.mainloop()
 
@@ -89,7 +91,6 @@ class Controlador:
         self.listbox_elem_aliados = None  # Esto va a ser util para actualizar desde cualquier sitio
         self.listbox_elem_enemigos = None
         self.listbox_elem_objetos = None
-
 
     def primer_uso(self):
         self.ruta_config.touch()
@@ -163,10 +164,26 @@ class Controlador:
             return True
         else: return False
 
+    def modificar_obj(self, nombre,descripcion, tipo, precio, modificador, nombre_ant):
+        objeto = Objeto(self.campagna, nombre, "comun", descripcion, tipo, precio, modificador)
+        if util_bbdd.modifcar_objeto(objeto, nombre_ant):
+            self.escribir_en_historial(f" Modificado objeto: {objeto.nombre} del tipo:  {objeto.tipo}")
+            self.actualizar_listas()
+            return True
+        else: return False
+
     def dar_obj(self, objeto, pj):
         objeto.personaje = pj.id
         if util_bbdd.insertar_objeto(objeto):
-            self.escribir_en_historial(f" Creado objeto: {objeto.nombre} del tipo:  {objeto.tipo}")
+            self.escribir_en_historial(f"{pj.nombre} recibe {objeto.nombre}")
+            self.actualizar_listas()
+            return True
+        else: return False
+
+    def quitar_obj(self, objeto, pj):
+        objeto.personaje = pj.id
+        if util_bbdd.borrar_objeto_pj(objeto):
+            self.escribir_en_historial(f"{pj.nombre} pierde {objeto.nombre}")
             self.actualizar_listas()
             return True
         else: return False
@@ -191,6 +208,12 @@ class Controlador:
         if util_bbdd.borrar_personaje(id_antiguo):
             # self.escribir_en_historial(f" Se ha borrado la ficha de: {id_antiguo}")
             self.actualizar_lista_pers()
+            return True
+        else: return False
+
+    def borrar_objeto(self, objeto):
+        if util_bbdd.borrar_objeto(objeto):
+            self.actualizar_lista_objs()
             return True
         else: return False
 
@@ -243,7 +266,6 @@ class Controlador:
         lista = util_bbdd.recuperar_objetos(self.campagna, pj.id)
         return util.traducir_objeto_bbdd(lista)
 
-
     # Metodos graficos
     def cambiar_pantalla(self, ventana, pantalla):
         pantalla = ventana.pantallas[pantalla]
@@ -269,6 +291,14 @@ class Controlador:
             FormularioModPJ(self.ventana, self, self.enemigos[personaje])
         except KeyError:
             pass
+
+    def abrir_ventana_mod_obj(self, event):
+        if self.listbox_elem_objetos.get_seleccion():
+            try:
+                objeto = self.listbox_elem_objetos.get_seleccion()
+                FormularioModObj(self.ventana, self, objeto)
+            except KeyError:
+                pass
 
     def abrir_menu_ataque(self, formulario_pj, pj):
         FormularioAtacar(formulario_pj, self, pj)
@@ -317,6 +347,15 @@ class Controlador:
             mensaje = objetivo.recibir_ataque(ataque,dagno)
             self.escribir_en_historial(mensaje)
             self.modificar_personaje_con_pj(objetivo)
+            return True
+        except:
+            return False
+
+    def curacion(self, pj, objeto):
+        try:
+            mensaje = pj.curarse(objeto.modificador)
+            self.escribir_en_historial(mensaje)
+            self.modificar_personaje_con_pj(pj)
             return True
         except:
             return False

@@ -31,8 +31,6 @@ class Personaje:
         dagno = self.calcular_dagno(arma) + modificador
         return ataque, dagno, mensaje
 
-
-
     def calcular_dagno(self, arma=None):
         return 0
 
@@ -44,6 +42,7 @@ class Personaje:
         else:
             mensaje = f"{self.nombre} para el ataque con defensa de: {self.defensa}, no recibe daño"
             return mensaje
+
     def recibir_dagno(self, dagno):
         self.pv_actual -= dagno
         if self.pv_actual <= 0:
@@ -60,7 +59,7 @@ class Personaje:
             mensaje = f"{self.nombre} ha recuperado todos los puntos de vida"
         else:
             mensaje = f"{self.nombre}  ha recuperado {puntos_curacion} tiene {self.pv_actual} puntos de vida"
-        util.mostrar_mensaje(mensaje)
+        return mensaje
 
     def subir_nivel(self):
         self.nivel += 1

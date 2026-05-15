@@ -12,6 +12,7 @@ class FormularioAtacar(Formulario):
         self.personajes = self.controlador.obtener_personajes()
         self.armas = self.controlador.obtener_armas(pj.id)
         self.dict_alias_pj = dict()
+        self.dict_alias_nombreobj = dict()
         self.lista_personajes = list()
         self.lista_armas = list()
         self.arma = tk.StringVar()
@@ -33,10 +34,10 @@ class FormularioAtacar(Formulario):
 
     def atacar(self):
         if self.controlador.ataque(self.pj, self.dict_alias_pj[self.objetivo.get()], self.arma.get()):
-            mb.showinfo("Ataque realizado")
+            mb.showinfo("Ataque realizado","Ataque realizado correctamennte")
             self.destroy()
         else:
-            mb.showerror("ERROR")
+            mb.showerror("ERROR", "Algo ha fallado")
 
     def llenar_desplegables(self):
         for pj in self.personajes:
@@ -44,7 +45,9 @@ class FormularioAtacar(Formulario):
             self.dict_alias_pj[alias] = pj
             self.lista_personajes.append(alias)
         for arma in self.lista_armas:
-            self.lista_armas.append(arma.nombre)
+            alias = f"{arma.nombre}"
+            self.dict_alias_nombreobj[alias] = arma
+            self.lista_armas.append(arma.nombre.replace(" ", "_"))
 
 
 

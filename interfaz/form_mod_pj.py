@@ -133,7 +133,7 @@ class FormularioModPJ(Formulario):
             dic_caracteristicas,
             self.pv.get()
         ):
-            mb.showinfo("Personaje creado",f"{self.nombre_pj.get()} se ha modificado correctamente")
+            mb.showinfo("Personaje modificado",f"{self.nombre_pj.get()} se ha modificado correctamente")
             self.destroy()
         else:
             mb.showerror("ERROR",f"Ha habido algún error",)

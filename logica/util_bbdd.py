@@ -197,3 +197,50 @@ def recuperar_armas(personaje):
     conn.commit()
     conn.close()
     return resultado
+
+def modifcar_objeto(objeto, nombre_ant):
+    conn = conectar_bbdd()
+    cursor = conn.cursor()
+    instruccion = (f"UPDATE objetos SET nombre = '{objeto.nombre}',"
+                   f"descripcion = '{objeto.descripcion}',"
+                   f"tipo = '{objeto.tipo}',"
+                   f"precio = {objeto.precio}, "
+                   f"modificador = {objeto.modificador} "
+                   f"WHERE nombre = '{nombre_ant}'")
+    try:
+        cursor.execute(
+            instruccion
+        )
+        conn.commit()
+        return True
+    except sql.IntegrityError:
+        conn.close()
+        return False
+
+def borrar_objeto(objeto):
+    conn = conectar_bbdd()
+    cursor = conn.cursor()
+    instruccion = f"DELETE FROM objetos WHERE nombre='{objeto.nombre}'"
+    try:
+        cursor.execute(
+            instruccion
+        )
+        conn.commit()
+        return True
+    except sql.IntegrityError:
+        conn.close()
+        return False
+
+def borrar_objeto_pj(objeto):
+    conn = conectar_bbdd()
+    cursor = conn.cursor()
+    instruccion = f"DELETE FROM objetos WHERE nombre='{objeto.nombre}' AND personaje='{objeto.personaje}'"
+    try:
+        cursor.execute(
+            instruccion
+        )
+        conn.commit()
+        return True
+    except sql.IntegrityError:
+        conn.close()
+        return False

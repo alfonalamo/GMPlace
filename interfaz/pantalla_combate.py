@@ -48,14 +48,6 @@ class Combate(Pantalla):
         )
         self.controlador.listbox_personajes = self.lista_personajes
 
-        tk.Button(
-            frame_personajes,
-            text="Añadir enemigo",
-            background=estilos.Color.COMPONENTE,
-            **estilos.ESTILO_PREDETERMINADO,
-            width=20
-            ).pack()
-
         frame_notas = tk.Frame(
             self,
             background=estilos.Color.FONDO
@@ -65,7 +57,6 @@ class Combate(Pantalla):
             frame_notas,
             **estilos.ESTILO_PREDETERMINADO_LIGERO,
             spacing1=4
-            # yscrollcommand=barra_scroll_comentario.set
         )
         self.texto_resumen.pack(
             side=tk.TOP,

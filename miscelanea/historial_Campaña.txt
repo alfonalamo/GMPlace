@@ -1,0 +1,16 @@
+15/05/26 11:44  Ha nacido Frodo Bolsón, es un pj de Tolkien, Caracteristicas: {'FUE': 8, 'CON': 7, 'SAB': 13, 'INT': 11, 'DES': 11, 'CAR': 16}, Modificadores: {'FUE': -2, 'CON': -3, 'SAB': 3, 'INT': 1, 'DES': 1, 'CAR': 6} PV: 42, CA: 7 Descripción :  Es un hobbit.
+15/05/26 11:45  Ha nacido Vin, es un pj de Sanderson, Caracteristicas: {'FUE': 7, 'CON': 9, 'SAB': 12, 'INT': 11, 'DES': 13, 'CAR': 11}, Modificadores: {'FUE': -3, 'CON': -1, 'SAB': 2, 'INT': 1, 'DES': 3, 'CAR': 1} PV: 54, CA: 9 Descripción :  Nacida de la bruma.
+15/05/26 11:45  Ha nacido Jon nieve, es un pj de Martin, Caracteristicas: {'FUE': 12, 'CON': 13, 'SAB': 0, 'INT': 9, 'DES': 12, 'CAR': 12}, Modificadores: {'FUE': 2, 'CON': 3, 'SAB': -10, 'INT': -1, 'DES': 2, 'CAR': 2} PV: 78, CA: 13 Descripción :  No sabe nada .
+15/05/26 11:48  Ha nacido Demogorgon, es un enemigo de Master, Caracteristicas: {'FUE': 15, 'CON': 13, 'SAB': 8, 'INT': 7, 'DES': 8, 'CAR': 12}, Modificadores: {'FUE': 5, 'CON': 3, 'SAB': -2, 'INT': -3, 'DES': -2, 'CAR': 2} PV: 78, CA: 13 Descripción :  Da mucho miedo.
+15/05/26 11:49  Creado objeto: Varita de sauco del tipo:  arma
+15/05/26 11:50  Creado objeto: Excálibur del tipo:  arma
+15/05/26 11:51  Creado objeto: Anillo único del tipo:  clave
+15/05/26 11:51  Creado objeto: Antorcha del tipo:  simple
+15/05/26 11:51  Modificado objeto: Varita_de_sauco del tipo:  arma
+15/05/26 11:53  Creado objeto: Poción de curación mayor del tipo:  pocion
+15/05/26 11:56  Creado objeto: Poción pequeña del tipo:  pocion
+15/05/26 11:56 Frodo Bolsón recibe Anillo único
+15/05/26 11:56 Frodo Bolsón recibe Poción de curación mayor
+15/05/26 11:56 Frodo Bolsón recibe Excálibur
+15/05/26 11:59 Frodo Bolsón ataca a Demogorgon, ha sacado un 2 + 7 = 9
+15/05/26 11:59 Demogorgon para el ataque con defensa de: 13, no recibe daño

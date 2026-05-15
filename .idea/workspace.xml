@@ -5,9 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6065280e-dccc-4b15-84dc-90c990a42ce8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/interfaz/form_mod_obj.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaz/form_ver_obj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GMPlace.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GMPlace.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/constantes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/constantes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constantes/estilos.py" beforeDir="false" afterPath="$PROJECT_DIR$/constantes/estilos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/datos/personajes.py" beforeDir="false" afterPath="$PROJECT_DIR$/datos/personajes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaz/ventana.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/ventana.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/form_ataque.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/form_ataque.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/form_crear_objeto.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/form_crear_objeto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/form_manejarpj.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/form_manejarpj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/form_mod_pj.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/form_mod_pj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/form_objetos.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/form_objetos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/items.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/navegador.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/navegador.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaz/pantalla_combate.py" beforeDir="false" afterPath="$PROJECT_DIR$/interfaz/pantalla_combate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logica/controlador.py" beforeDir="false" afterPath="$PROJECT_DIR$/logica/controlador.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logica/util_bbdd.py" beforeDir="false" afterPath="$PROJECT_DIR$/logica/util_bbdd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/miscelanea/config.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,28 +50,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.Combate.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Manager.executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.controlador_combate.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.personajes.executor&quot;: &quot;Run&quot;,
-    &quot;Python.util.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Desarrollo/GMPlace/interfaz&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.App.executor": "Run",
+    "Python.Combate.executor": "Run",
+    "Python.Main.executor": "Run",
+    "Python.Manager.executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.controlador.executor": "Run",
+    "Python.controlador_combate.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.personajes.executor": "Run",
+    "Python.sql_pruebas.executor": "Run",
+    "Python.util.executor": "Run",
+    "Python.util_bbdd.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Desarrollo/GMPlace/interfaz",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Desarrollo\GMPlace\interfaz" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Desarrollo\GMPlace\interfaz\pantallas" />
       <recent name="C:\Desarrollo\GMPlace\constantes" />
       <recent name="C:\Desarrollo\GMPlace\interfaz" />
       <recent name="C:\Desarrollo\GMPlace\logica" />
@@ -62,7 +84,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.Main">
-    <configuration name="Combate" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="App" type="PythonConfigurationType" factoryName="Python">
       <module name="GMPlace" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -76,7 +98,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/logica/controlador_combate.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -109,7 +131,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Combate" />
+      <item itemvalue="Python.App" />
       <item itemvalue="Python.Main" />
     </list>
   </component>
@@ -131,28 +153,44 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/interfaz/pantallas.py</url>
-          <line>10</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/interfaz/navegador.py</url>
-          <line>14</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/interfaz/pantallas.py</url>
-          <line>166</line>
-          <option name="timeStamp" value="25" />
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/interfaz/items.py</url>
+          <line>161</line>
+          <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/interfaz/formulario.py</url>
-          <line>109</line>
-          <option name="timeStamp" value="29" />
+          <url>file://$PROJECT_DIR$/logica/controlador.py</url>
+          <line>207</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datos/personajes.py</url>
+          <line>24</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/logica/util_bbdd.py</url>
+          <line>163</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/logica/controlador.py</url>
+          <line>346</line>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -82,7 +82,7 @@ class ListBoxPersonajes(ListBoxEstandar)   :
                 if obj_pj.tipo == "pj":
                     self.itemconfig(tk.END, bg=estilos.Color.ALIADO)
                 else:
-                    self.itemconfig(tk.END, bg="red")
+                    self.itemconfig(tk.END, bg=estilos.Color.ENEMIGO)
         except AttributeError:
             print("error", dic_pers)
             pass
@@ -93,7 +93,6 @@ class ListBoxPersonajes(ListBoxEstandar)   :
             # return self.get(indice).split("-")[0].strip(" ")
             alias = self.get(indice)
             return self.lista_pers[alias]
-
 
 class ListBoxObjetos(ListBoxEstandar):
     def __init__(self, contenedor):
@@ -112,9 +111,14 @@ class ListBoxObjetos(ListBoxEstandar):
                 self.lista_objetos[alias] = obj
                 self.insert(tk.END, alias)
                 if obj.tipo == "arma":
-                    self.itemconfig(tk.END, bg=estilos.Color.ALIADO)
+                    self.itemconfig(tk.END, bg=estilos.Color.ARMA)
+                elif obj.tipo == "pocion":
+                    self.itemconfig(tk.END, bg=estilos.Color.POCION)
+                elif obj.tipo == "clave":
+                    self.itemconfig(tk.END, bg=estilos.Color.OBJETO_CLAVE)
                 else:
-                    self.itemconfig(tk.END, bg="red")
+                    self.itemconfig(tk.END, bg=estilos.Color.OBJETO_SIMPLE)
+
         except AttributeError:
             print("error", dic_obj)
             pass
@@ -131,9 +135,13 @@ class ListBoxObjetos(ListBoxEstandar):
                 self.lista_objetos[alias] = obj
                 self.insert(tk.END, alias)
                 if obj.tipo == "arma":
-                    self.itemconfig(tk.END, bg=estilos.Color.ALIADO)
+                    self.itemconfig(tk.END, bg=estilos.Color.ARMA)
+                elif obj.tipo == "pocion":
+                    self.itemconfig(tk.END, bg=estilos.Color.POCION)
+                elif obj.tipo == "clave":
+                    self.itemconfig(tk.END, bg=estilos.Color.OBJETO_CLAVE)
                 else:
-                    self.itemconfig(tk.END, bg="red")
+                    self.itemconfig(tk.END, bg=estilos.Color.OBJETO_SIMPLE)
         except AttributeError:
             print("error", lista_obj)
             pass
